@@ -148,6 +148,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return new ResponseEntity<>("El proyecto no existe", HttpStatus.NO_CONTENT);
     }
+
+    public ResponseEntity<String> deleteEmployeeFromProject(Integer idProyecto,Integer idEmpleado){
+        EmpleadoAProyecto asignacionAEliminar = empleadoAProyectoRepository.getByProjectAndEmployee(idProyecto,idEmpleado);
+        empleadoAProyectoRepository.delete(asignacionAEliminar);
+
+        return new ResponseEntity<>("Empleado " + idEmpleado + " eliminado del proyecto " + idProyecto,HttpStatus.OK);
+    }
 }
 
 /*  */

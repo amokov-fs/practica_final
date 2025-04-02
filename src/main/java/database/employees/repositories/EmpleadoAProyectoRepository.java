@@ -18,4 +18,9 @@ public interface EmpleadoAProyectoRepository extends JpaRepository<EmpleadoAProy
 
     @Query("select ep.idProyecto from pr_empleados_proyecto ep where ep.idEmpleado = :idEmpleado")
     List<Integer> getProjectsIdEmployee(@Param("idEmpleado") int idEmpleado);
+
+    @Query("select ep from pr_empleados_proyecto ep " +
+            "where ep.idEmpleado = :idEmpleado and ep.idProyecto = :idProyecto")
+    EmpleadoAProyecto getByProjectAndEmployee(@Param("idProyecto") int idProyecto,
+                                          @Param("idEmpleado") int idEmpleado);
 }

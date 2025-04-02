@@ -88,4 +88,11 @@ public class Controller {
     public ResponseEntity<String> deleteProject(@RequestParam(value = "idProyecto") Integer idProyecto){
         return employeeService.deleteProject(idProyecto);
     }
+
+    @DeleteMapping
+    @RequestMapping("deleteEmployeeFromProject")
+    public ResponseEntity<String> deleteEmployeeFromProject(@RequestParam(value = "idProyecto") Integer idProyecto,
+                                                            @RequestParam(value = "idEmpleado") Integer idEmpleado){
+        return employeeService.deleteEmployeeFromProject(idProyecto,idEmpleado);
+    }
 }
