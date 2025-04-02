@@ -38,5 +38,5 @@ public interface EmployeeService {
     public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(Integer idProyecto,
                                                                      Integer idEmpleado,
                                                                      String fAlta);
-    public void updateEmployee(String employee);
+    public ResponseEntity<String> deleteEmployee(Integer idEmpleado);
 }

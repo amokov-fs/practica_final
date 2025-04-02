@@ -8,6 +8,7 @@ import database.employees.tables.EmpleadoAProyecto;
 import database.employees.tables.Empleados;
 import database.employees.tables.Proyectos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(Integer idProyecto){
-        List<EmpleadoAProyecto> empleadosProyecto = empleadoAProyectoRepository.getEmpleadoAProyectoByIdEquals(idProyecto);
+        List<EmpleadoAProyecto> empleadosProyecto = empleadoAProyectoRepository.getEmployeesProject(idProyecto);
         return new ResponseEntity<>(empleadosProyecto, HttpStatus.OK);
     }
 
@@ -104,7 +105,26 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new ResponseEntity<>(empleadoAProyecto, HttpStatus.CREATED);
     }
 
-    public void updateEmployee(String employee){
-        System.out.println("update "+employee);
+    public ResponseEntity<String> deleteEmployee(Integer idEmpleado){
+        List<Empleados> empleados = empleadosRepository.getAll();
+        Empleados empleadoAEliminar = null;
+        for (int i = 0; i<empleados.size();i++) {
+            if (Objects.equals(empleados.get(i).getId(), idEmpleado)) {
+                empleadoAEliminar = empleados.get(i);
+            }
+        }
+
+        if (empleadoAEliminar != null) {
+            List<Integer> proyectosEmpleado = empleadoAProyectoRepository.getProjectsEmployee(idEmpleado);
+            try {
+                empleadosRepository.delete(empleadoAEliminar);
+                return new ResponseEntity<>("Empleado" + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() + "eliminado", HttpStatus.OK);
+            } catch (DataIntegrityViolationException e) {
+
+                return new ResponseEntity<>("No se puede dar de baja al empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() +" porque está asignado a el/los proyecto/s " + proyectosEmpleado.toString(), HttpStatus.BAD_REQUEST);
+            }
+        }
+        System.err.println("No se puede dar de baja al empleado" + idEmpleado + " porque no existe");
+        return new ResponseEntity<>("El empleado no existe", HttpStatus.NO_CONTENT);
     }
 }

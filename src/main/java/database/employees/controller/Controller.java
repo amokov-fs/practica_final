@@ -77,9 +77,9 @@ public class Controller {
         return employeeService.assignEmployeeToProject(idProyecto,idEmpleado,fAlta);
     }
 
-    @PutMapping
-    @RequestMapping("updateEmployee")
-    public void updateEmployee(@RequestParam(value = "employee") String employee){
-        employeeService.updateEmployee(employee);
+    @DeleteMapping
+    @RequestMapping("deleteEmployee")
+    public ResponseEntity<String> deleteEmployee(@RequestParam(value = "idEmpleado") Integer idEmpleado){
+        return employeeService.deleteEmployee(idEmpleado);
     }
 }
