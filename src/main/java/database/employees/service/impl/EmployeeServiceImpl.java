@@ -115,7 +115,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         if (empleadoAEliminar != null) {
-            List<Integer> proyectosEmpleado = empleadoAProyectoRepository.getProjectsEmployee(idEmpleado);
+            List<Integer> proyectosEmpleado = empleadoAProyectoRepository.getProjectsIdEmployee(idEmpleado);
             try {
                 empleadosRepository.delete(empleadoAEliminar);
                 return new ResponseEntity<>("Empleado" + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() + "eliminado", HttpStatus.OK);
@@ -127,4 +127,28 @@ public class EmployeeServiceImpl implements EmployeeService {
         System.err.println("No se puede dar de baja al empleado" + idEmpleado + " porque no existe");
         return new ResponseEntity<>("El empleado no existe", HttpStatus.NO_CONTENT);
     }
+
+    public ResponseEntity<String> deleteProject(Integer idProyecto){
+        List<Proyectos> proyectos = proyectosRepository.getAll();
+        Proyectos proyectoAEliminar = null;
+        for (int i = 0; i<proyectos.size();i++) {
+            if (Objects.equals(proyectos.get(i).getId(), idProyecto)) {
+                proyectoAEliminar = proyectos.get(i);
+            }
+        }
+
+        if (proyectoAEliminar != null) {
+            List<Integer> empleadosProyecto = empleadoAProyectoRepository.getEmployeesIdProject(idProyecto);
+            if (empleadosProyecto.isEmpty()){
+                proyectoAEliminar.setFechaBaja(LocalDate.now());
+                proyectosRepository.save(proyectoAEliminar);
+                return new ResponseEntity<>("Proyecto " + proyectoAEliminar.getDescripcion() + " eliminado", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("No se puede dar de baja al proyecto " + proyectoAEliminar.getDescripcion() +" porque está asignado a el/los empleado/s " + empleadosProyecto.toString(), HttpStatus.BAD_REQUEST);
+
+        }
+        return new ResponseEntity<>("El proyecto no existe", HttpStatus.NO_CONTENT);
+    }
 }
+
+/*  */

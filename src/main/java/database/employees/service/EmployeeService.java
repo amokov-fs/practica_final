@@ -39,4 +39,6 @@ public interface EmployeeService {
                                                                      Integer idEmpleado,
                                                                      String fAlta);
     public ResponseEntity<String> deleteEmployee(Integer idEmpleado);
+
+    public ResponseEntity<String> deleteProject(Integer idProyecto);
 }

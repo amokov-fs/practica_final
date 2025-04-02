@@ -1,7 +1,6 @@
 package database.employees.repositories;
 
 import database.employees.tables.EmpleadoAProyecto;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +13,9 @@ public interface EmpleadoAProyectoRepository extends JpaRepository<EmpleadoAProy
     @Query("select ep from pr_empleados_proyecto ep where ep.idProyecto = :idProyecto")
     List<EmpleadoAProyecto> getEmployeesProject(@Param("idProyecto") int idProyecto);
 
+    @Query("select ep.idEmpleado from pr_empleados_proyecto ep where ep.idProyecto = :idProyecto")
+    List<Integer> getEmployeesIdProject(@Param("idProyecto") int idProyecto);
+
     @Query("select ep.idProyecto from pr_empleados_proyecto ep where ep.idEmpleado = :idEmpleado")
-    List<Integer> getProjectsEmployee(@Param("idEmpleado") int idEmpleado);
+    List<Integer> getProjectsIdEmployee(@Param("idEmpleado") int idEmpleado);
 }
