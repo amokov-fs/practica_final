@@ -2,12 +2,12 @@ package database.employees.controller;
 
 import database.employees.service.EmployeeService;
 import database.employees.tables.Empleados;
+import database.employees.tables.EmpleadoAProyecto;
 import database.employees.tables.Proyectos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,6 +25,12 @@ public class Controller {
     @RequestMapping("getProjects")
     public ResponseEntity<List<Proyectos>> getProjects(){
         return employeeService.getProjects();
+    }
+
+    @GetMapping
+    @RequestMapping("getProjectEmployees")
+    public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(@RequestParam(value = "idProyecto") Integer idProyecto){
+        return employeeService.getProjectEmployees(idProyecto);
     }
 
     @PostMapping
@@ -61,6 +67,14 @@ public class Controller {
                                                     @RequestParam(value = "lugar") String lugar,
                                                     @RequestParam(value = "obser") String obser) {
         return employeeService.createProject(desc,fInicio,fFin,lugar,obser);
+    }
+
+    @PostMapping
+    @RequestMapping("assignEmployeeToProject")
+    public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(@RequestParam(value = "idProyecto") Integer idProyecto,
+                                                           @RequestParam(value = "idEmpleado") Integer idEmpleado,
+                                                           @RequestParam(value = "fAlta") String fAlta) {
+        return employeeService.assignEmployeeToProject(idProyecto,idEmpleado,fAlta);
     }
 
     @PutMapping

@@ -1,6 +1,7 @@
 package database.employees.service;
 
 
+import database.employees.tables.EmpleadoAProyecto;
 import database.employees.tables.Empleados;
 import database.employees.tables.Proyectos;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ public interface EmployeeService {
     public ResponseEntity<List<Empleados>> getEmployees();
 
     public ResponseEntity<List<Proyectos>> getProjects();
+
+    public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(Integer idProyecto);
     public ResponseEntity<Empleados> createEmployee(String nifEmpleado,
                                                     String nombreEmpleado,
                                                     String ap1Empleado,
@@ -31,5 +34,9 @@ public interface EmployeeService {
                                                    String fFin,
                                                    String lugar,
                                                    String obser);
+
+    public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(Integer idProyecto,
+                                                                     Integer idEmpleado,
+                                                                     String fAlta);
     public void updateEmployee(String employee);
 }

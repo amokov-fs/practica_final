@@ -1,8 +1,10 @@
 package database.employees.service.impl;
 
+import database.employees.repositories.EmpleadoAProyectoRepository;
 import database.employees.repositories.EmpleadosRepository;
 import database.employees.repositories.ProyectosRepository;
 import database.employees.service.EmployeeService;
+import database.employees.tables.EmpleadoAProyecto;
 import database.employees.tables.Empleados;
 import database.employees.tables.Proyectos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     ProyectosRepository proyectosRepository;
 
+    @Autowired
+    EmpleadoAProyectoRepository empleadoAProyectoRepository;
+
     public ResponseEntity<List<Empleados>> getEmployees(){
 
         List<Empleados> empleados = empleadosRepository.getAll();
@@ -34,6 +39,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         List<Proyectos> proyectos = proyectosRepository.getAll();
         return new ResponseEntity<>(proyectos, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(Integer idProyecto){
+        List<EmpleadoAProyecto> empleadosProyecto = empleadoAProyectoRepository.getEmpleadoAProyectoByIdEquals(idProyecto);
+        return new ResponseEntity<>(empleadosProyecto, HttpStatus.OK);
     }
 
     public ResponseEntity<Empleados> createEmployee(String nifEmpleado,
@@ -81,6 +91,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         Proyectos proyecto = new Proyectos(desc,fechaInicio,fechaFin,lugar,obser);
         proyectosRepository.save(proyecto);
         return new ResponseEntity<>(proyecto, HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(Integer idProyecto,
+                                                                     Integer idEmpleado,
+                                                                     String fAlta){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate fechaAlta = LocalDate.parse(fAlta, formatter);
+
+        EmpleadoAProyecto empleadoAProyecto = new EmpleadoAProyecto(idProyecto,idEmpleado,fechaAlta);
+        empleadoAProyectoRepository.save(empleadoAProyecto);
+        return new ResponseEntity<>(empleadoAProyecto, HttpStatus.CREATED);
     }
 
     public void updateEmployee(String employee){
