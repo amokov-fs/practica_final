@@ -100,20 +100,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate fechaAlta = LocalDate.parse(fAlta, formatter);
 
-        EmpleadoAProyecto empleadoAProyecto = new EmpleadoAProyecto(idProyecto,idEmpleado,fechaAlta);
-        empleadoAProyectoRepository.save(empleadoAProyecto);
-        return new ResponseEntity<>(empleadoAProyecto, HttpStatus.CREATED);
+        Empleados empleado = empleadosRepository.getEmployeeById(idEmpleado);
+        Proyectos proyecto = proyectosRepository.getProjectById(idProyecto);
+
+        if (empleado.getFechaBaja() == null && proyecto.getFechaBaja() == null){
+            EmpleadoAProyecto empleadoAProyecto = new EmpleadoAProyecto(idProyecto,idEmpleado,fechaAlta);
+            empleadoAProyectoRepository.save(empleadoAProyecto);
+            return new ResponseEntity<>(empleadoAProyecto, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(new EmpleadoAProyecto(), HttpStatus.BAD_REQUEST);
+
     }
 
     public ResponseEntity<String> deleteEmployee(Integer idEmpleado){
-        List<Empleados> empleados = empleadosRepository.getAll();
-        Empleados empleadoAEliminar = null;
-        for (int i = 0; i<empleados.size();i++) {
-            if (Objects.equals(empleados.get(i).getId(), idEmpleado)) {
-                empleadoAEliminar = empleados.get(i);
-            }
-        }
-        System.out.println(empleadoAEliminar.toString());
+        Empleados empleadoAEliminar = empleadosRepository.getEmployeeById(idEmpleado);
         if (empleadoAEliminar != null) {
             List<Integer> proyectosEmpleado = empleadoAProyectoRepository.getProjectsIdEmployee(idEmpleado);
             if (proyectosEmpleado.isEmpty()){
@@ -128,13 +128,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public ResponseEntity<String> deleteProject(Integer idProyecto){
-        List<Proyectos> proyectos = proyectosRepository.getAll();
-        Proyectos proyectoAEliminar = null;
-        for (int i = 0; i<proyectos.size();i++) {
-            if (Objects.equals(proyectos.get(i).getId(), idProyecto)) {
-                proyectoAEliminar = proyectos.get(i);
-            }
-        }
+        Proyectos proyectoAEliminar = proyectosRepository.getProjectById(idProyecto);
 
         if (proyectoAEliminar != null) {
             List<Integer> empleadosProyecto = empleadoAProyectoRepository.getEmployeesIdProject(idProyecto);
@@ -151,9 +145,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public ResponseEntity<String> deleteEmployeeFromProject(Integer idProyecto,Integer idEmpleado){
         EmpleadoAProyecto asignacionAEliminar = empleadoAProyectoRepository.getByProjectAndEmployee(idProyecto,idEmpleado);
-        empleadoAProyectoRepository.delete(asignacionAEliminar);
 
-        return new ResponseEntity<>("Empleado " + idEmpleado + " eliminado del proyecto " + idProyecto,HttpStatus.OK);
+        Empleados empleado = empleadosRepository.getEmployeeById(idEmpleado);
+        Proyectos proyecto = proyectosRepository.getProjectById(idProyecto);
+
+        if (empleado.getFechaBaja() == null && proyecto.getFechaBaja() == null) {
+            empleadoAProyectoRepository.delete(asignacionAEliminar);
+            return new ResponseEntity<>("Empleado " + idEmpleado + " eliminado del proyecto " + idProyecto,HttpStatus.OK);
+        }
+        System.out.println("NO se puede");
+        return new ResponseEntity<>("La relacion no existe" , HttpStatus.BAD_REQUEST);
     }
 }
 
