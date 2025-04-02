@@ -113,18 +113,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                 empleadoAEliminar = empleados.get(i);
             }
         }
-
+        System.out.println(empleadoAEliminar.toString());
         if (empleadoAEliminar != null) {
             List<Integer> proyectosEmpleado = empleadoAProyectoRepository.getProjectsIdEmployee(idEmpleado);
-            try {
-                empleadosRepository.delete(empleadoAEliminar);
-                return new ResponseEntity<>("Empleado" + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() + "eliminado", HttpStatus.OK);
-            } catch (DataIntegrityViolationException e) {
-
-                return new ResponseEntity<>("No se puede dar de baja al empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() +" porque está asignado a el/los proyecto/s " + proyectosEmpleado.toString(), HttpStatus.BAD_REQUEST);
+            if (proyectosEmpleado.isEmpty()){
+                empleadoAEliminar.setFechaBaja(LocalDate.now());
+                empleadosRepository.save(empleadoAEliminar);
+                return new ResponseEntity<>("Empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() + " eliminado", HttpStatus.OK);
             }
+            return new ResponseEntity<>("No se puede dar de baja al empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() +" porque está asignado a el/los proyecto/s " + proyectosEmpleado.toString(), HttpStatus.BAD_REQUEST);
+
         }
-        System.err.println("No se puede dar de baja al empleado" + idEmpleado + " porque no existe");
         return new ResponseEntity<>("El empleado no existe", HttpStatus.NO_CONTENT);
     }
 
