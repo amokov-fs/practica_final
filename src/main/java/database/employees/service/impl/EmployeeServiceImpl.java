@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -18,8 +19,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     EmpleadosRepository empleadosRepository;
 
-    public void getEmployee(String employee){
-        System.out.println("get "+employee);
+    public ResponseEntity<List<Empleados>> getEmployees(){
+
+        List<Empleados> empleados = empleadosRepository.getAll();
+        return new ResponseEntity<>(empleados, HttpStatus.OK);
     }
 
     public ResponseEntity<Empleados> createEmployee(String nifEmpleado,
@@ -31,16 +34,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                                                     String tel2Empleado,
                                                     String emailEmpleado,
                                                     String fAltaEmpleado,
-                                                    String fBajaEmpleado,
                                                     String edoEmpleado,
                                                     String uniEmpleado){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate fechaNacimiento = LocalDate.parse(fNacEmpleado, formatter);
         LocalDate fechaAlta = LocalDate.parse(fAltaEmpleado, formatter);
-        LocalDate fechaBaja = null;
-        if (!Objects.equals(fBajaEmpleado, "") && fBajaEmpleado != null){
-            fechaBaja = LocalDate.parse(fBajaEmpleado, formatter);
-        }
+
 
 
         Empleados empleado = new Empleados(nifEmpleado,
@@ -52,9 +51,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                                             tel2Empleado,
                                             emailEmpleado,
                                             fechaAlta,
-                                            fechaBaja,
                                             edoEmpleado,
                                             uniEmpleado);
+
         empleadosRepository.save(empleado);
         return new ResponseEntity<>(empleado, HttpStatus.CREATED);
     }

@@ -88,7 +88,7 @@ public class Empleados {
     public Empleados() {
     }
 
-    public Empleados(String nif, String nombre, String apellido1, String apellido2, LocalDate fechaNacimiento, String ntelefono1, String ntelefono2, String email, LocalDate fechaAlta, LocalDate fechaBaja, String ecivil, String formacionU) {
+    public Empleados(String nif, String nombre, String apellido1, String apellido2, LocalDate fechaNacimiento, String ntelefono1, String ntelefono2, String email, LocalDate fechaAlta, String ecivil, String formacionU) {
 
         this.nif = nif;
         this.nombre = nombre;
@@ -99,7 +99,7 @@ public class Empleados {
         this.ntelefono2 = ntelefono2;
         this.email = email;
         this.fechaAlta = fechaAlta;
-        this.fechaBaja = fechaBaja;
+        this.fechaBaja = null;
         this.ecivil = ecivil;
         this.formacionU = formacionU;
     }

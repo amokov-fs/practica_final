@@ -6,15 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class Controller {
 
     @Autowired
     EmployeeService employeeService;
     @GetMapping
-    @RequestMapping("getEmployee")
-    public void getEmployee(@RequestParam(value = "employee") String employee){
-        employeeService.getEmployee(employee);
+    @RequestMapping("getEmployees")
+    public ResponseEntity<List<Empleados>> getEmployees(){
+        return employeeService.getEmployees();
     }
 
     @PostMapping
@@ -28,7 +30,6 @@ public class Controller {
                                                     @RequestParam(value = "tlf2Empleado") String tlf2Empleado,
                                                     @RequestParam(value = "emailEmpleado") String emailEmpleado,
                                                     @RequestParam(value = "fAltaEmpleado") String fAltaEmpleado,
-                                                    @RequestParam(value = "fBajaEmpleado") String fBajaEmpleado,
                                                     @RequestParam(value = "edoEmpleado") String edoEmpleado,
                                                     @RequestParam(value = "uniEmpleado") String uniEmpleado) {
         return employeeService.createEmployee(nifEmpleado,
@@ -40,7 +41,6 @@ public class Controller {
                                             tlf2Empleado,
                                             emailEmpleado,
                                             fAltaEmpleado,
-                                            fBajaEmpleado,
                                             edoEmpleado,
                                             uniEmpleado);
     }
