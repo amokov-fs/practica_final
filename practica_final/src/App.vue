@@ -4,33 +4,21 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <div>
-    
-    <div id="nav" style = "display:flex;gap:10px;">
-      <v-btn color="#028CF5">
-        <RouterLink to="/" style="text-decoration: none; ">
-          <span class = "text-white" >
-            Home
-          </span>
-        </RouterLink>
-      </v-btn>
-      <v-btn color="#028CF5">
-        <RouterLink to="/employees" style="text-decoration: none; ">
-          <span class = "text-white" >
-            Empleados
-          </span>
-        </RouterLink>
-      </v-btn>
-      <v-btn color="#028CF5">
-        <RouterLink to="/projects" style="text-decoration: none; ">
-          <span class = "text-white" >
-            Proyectos
-          </span>
-        </RouterLink>
-      </v-btn>
-    </div>
-    
-    
-    <RouterView />
+    <v-app>
+      <v-container>
+        
+        <v-main class="success">
+          <v-navigation-drawer :width="180" style="background-color:#028CF5;color:white;">
+            <v-list-item title="Future Space"></v-list-item>
+            <v-divider></v-divider>
+            <v-list-item link title="Inicio" href = "#/" ></v-list-item>
+            <v-list-item link title="Empleados" href = "#/employees"></v-list-item>
+            <v-list-item link title="Proyectos" href = "#/projects"></v-list-item>
+          </v-navigation-drawer>
+          <RouterView />
+        </v-main>
+      </v-container>
+    </v-app>
   </div>
 
   
@@ -40,8 +28,9 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style>
 
-body {
-  padding: 10px;
+.v-main {
+  margin-left: -50px;
+  margin-top: -10px;
 }
 
 </style>

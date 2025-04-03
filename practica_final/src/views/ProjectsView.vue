@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-        <h1>Vista proyectos</h1>
+        <h1>Proyectos</h1>
         <v-btn color="#028CF5" style="position:absolute;top:10px;right:10px;">Alta proyecto</v-btn>
     </div>
     <v-table style="border-style: ridge; width:50%;">

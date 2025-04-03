@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="header">
-        <h1>Vista empleados</h1>
-        <v-btn color="#028CF5" style="position:absolute;top:50px;right:10px;">Alta empleado</v-btn>
+        <h1>Empleados</h1>
+        <v-btn color="#028CF5" style="position:absolute;top:10px;right:10px;">Alta empleado</v-btn>
     </div>
     
     <v-table style="border-style: ridge;">
