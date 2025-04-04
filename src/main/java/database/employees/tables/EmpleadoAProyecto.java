@@ -21,10 +21,12 @@ public class EmpleadoAProyecto {
     @Column(name = "ID_EMPLEADO_A_PROYECTO")
     private Integer id;
     @Column(columnDefinition = "INT(5)",
-            name = "ID_PROYECTO")
+            name = "ID_PROYECTO",
+            nullable = false)
     private Integer idProyecto;
     @Column(columnDefinition = "INT(7)",
-            name = "ID_EMPLEADO")
+            name = "ID_EMPLEADO",
+            nullable = false)
     private Integer idEmpleado;
     @Column(
             columnDefinition = "DATE",

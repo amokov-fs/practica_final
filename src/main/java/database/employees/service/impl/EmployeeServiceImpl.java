@@ -62,8 +62,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         LocalDate fechaNacimiento = LocalDate.parse(fNacEmpleado, formatter);
         LocalDate fechaAlta = LocalDate.parse(fAltaEmpleado, formatter);
 
-
-
         Empleados empleado = new Empleados(nifEmpleado,
                                             nombreEmpleado,
                                             ap1Empleado,
@@ -87,7 +85,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                                                    String obser){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate fechaInicio = LocalDate.parse(fInicio, formatter);
-        LocalDate fechaFin = LocalDate.parse(fFin, formatter);
+        LocalDate fechaFin = null;
+        if(fFin != null){
+            fechaFin = LocalDate.parse(fFin, formatter);
+        }
+
 
         Proyectos proyecto = new Proyectos(desc,fechaInicio,fechaFin,lugar,obser);
         proyectosRepository.save(proyecto);
@@ -97,8 +99,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(Integer idProyecto,
                                                                      Integer idEmpleado,
                                                                      String fAlta){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate fechaAlta = LocalDate.parse(fAlta, formatter);
+        LocalDate fechaAlta = null;
+        if (fAlta != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            fechaAlta = LocalDate.parse(fAlta, formatter);
+        }
 
         Empleados empleado = empleadosRepository.getEmployeeById(idEmpleado);
         Proyectos proyecto = proyectosRepository.getProjectById(idProyecto);
@@ -153,9 +158,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             empleadoAProyectoRepository.delete(asignacionAEliminar);
             return new ResponseEntity<>("Empleado " + idEmpleado + " eliminado del proyecto " + idProyecto,HttpStatus.OK);
         }
-        System.out.println("NO se puede");
         return new ResponseEntity<>("La relacion no existe" , HttpStatus.BAD_REQUEST);
     }
 }
-
-/*  */

@@ -24,12 +24,14 @@ public class Proyectos {
     private Integer id;
     @Column(
             columnDefinition = "VARCHAR(125)",
-            name = "TX_DESCRIPCIÓN"
+            name = "TX_DESCRIPCIÓN",
+            nullable = false
     )
     private String descripcion;
     @Column(
             columnDefinition = "DATE",
-            name = "F_INICIO"
+            name = "F_INICIO",
+            nullable = false
 
     )
     private LocalDate fechaInicio;

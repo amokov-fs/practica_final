@@ -4,6 +4,9 @@ import database.employees.service.EmployeeService;
 import database.employees.tables.Empleados;
 import database.employees.tables.EmpleadoAProyecto;
 import database.employees.tables.Proyectos;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,23 +33,24 @@ public class Controller {
 
     @GetMapping
     @RequestMapping("getProjectEmployees")
-    public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(@RequestParam(value = "idProyecto") Integer idProyecto){
+    public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto){
         return employeeService.getProjectEmployees(idProyecto);
     }
 
     @PostMapping
     @RequestMapping("createEmployee")
-    public ResponseEntity<Empleados> createEmployee(@RequestParam(value = "nifEmpleado") String nifEmpleado,
-                                                    @RequestParam(value = "nombreEmpleado") String nombreEmpleado,
-                                                    @RequestParam(value = "ap1Empleado") String ap1Empleado,
-                                                    @RequestParam(value = "ap2Empleado") String ap2Empleado,
-                                                    @RequestParam(value = "fNacEmpleado") String fNacEmpleado,
-                                                    @RequestParam(value = "tlf1Empleado") String tlf1Empleado,
-                                                    @RequestParam(value = "tlf2Empleado") String tlf2Empleado,
-                                                    @RequestParam(value = "emailEmpleado") String emailEmpleado,
-                                                    @RequestParam(value = "fAltaEmpleado") String fAltaEmpleado,
-                                                    @RequestParam(value = "edoEmpleado") String edoEmpleado,
-                                                    @RequestParam(value = "uniEmpleado") String uniEmpleado) {
+    public ResponseEntity<Empleados> createEmployee(
+            @RequestParam(value = "nifEmpleado", required = false) @Pattern(regexp = "[0-9]{8}[A-z]", message = "El NIF debe tener 8 números y una letra") String nifEmpleado,
+            @RequestParam(value = "nombreEmpleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+", message = "El nombre solo puede tener letras") String nombreEmpleado,
+            @RequestParam(value = "ap1Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[-]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido solo puede tener letras y un guión") String ap1Empleado,
+            @RequestParam(value = "ap2Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[-]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido solo puede tener letras y un guión") String ap2Empleado,
+            @RequestParam(value = "fNacEmpleado") @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de nacimiento incorrecta") String fNacEmpleado,
+            @RequestParam(value = "tlf1Empleado") @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono incorrecto") String tlf1Empleado,
+            @RequestParam(value = "tlf2Empleado") @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono incorrecto") String tlf2Empleado,
+            @RequestParam(value = "emailEmpleado") @Pattern(regexp = "[a-z0-9]+[@][a-z]+[.][a-z]+", message = "Email incorrecto") String emailEmpleado,
+            @RequestParam(value = "fAltaEmpleado") @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de alta incorrecta") String fAltaEmpleado,
+            @RequestParam(value = "edoEmpleado") @Pattern(regexp = "[S|C]", message = "Estado civil incorrecto") String edoEmpleado,
+            @RequestParam(value = "uniEmpleado") @Pattern(regexp = "[S|N]", message = "Formación universitaria incorrecta") String uniEmpleado) {
         return employeeService.createEmployee(nifEmpleado,
                                             nombreEmpleado,
                                             ap1Empleado,
@@ -62,38 +66,40 @@ public class Controller {
 
     @PostMapping
     @RequestMapping("createProject")
-    public ResponseEntity<Proyectos> createProject(@RequestParam(value = "desc") String desc,
-                                                    @RequestParam(value = "fInicio") String fInicio,
-                                                    @RequestParam(value = "fFin") String fFin,
-                                                    @RequestParam(value = "lugar") String lugar,
-                                                    @RequestParam(value = "obser") String obser) {
+    public ResponseEntity<Proyectos> createProject(@RequestParam(value = "desc") @NotNull String desc,
+                                                    @RequestParam(value = "fInicio")
+                                                        @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de inicio incorrecta") String fInicio,
+                                                    @RequestParam(value = "fFin", required = false)
+                                                        @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])" , message = "Fecha de finalización incorrecta") String fFin,
+                                                    @RequestParam(value = "lugar", required = false) String lugar,
+                                                    @RequestParam(value = "obser", required = false) String obser) {
         return employeeService.createProject(desc,fInicio,fFin,lugar,obser);
     }
 
     @PostMapping
     @RequestMapping("assignEmployeeToProject")
-    public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(@RequestParam(value = "idProyecto") Integer idProyecto,
-                                                           @RequestParam(value = "idEmpleado") Integer idEmpleado,
-                                                           @RequestParam(value = "fAlta") String fAlta) {
+    public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto,
+                                                           @RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado,
+                                                           @RequestParam(value = "fAlta", required = false) @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])") String fAlta) {
         return employeeService.assignEmployeeToProject(idProyecto,idEmpleado,fAlta);
     }
 
     @DeleteMapping
     @RequestMapping("deleteEmployee")
-    public ResponseEntity<String> deleteEmployee(@RequestParam(value = "idEmpleado") Integer idEmpleado){
+    public ResponseEntity<String> deleteEmployee(@RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado){
         return employeeService.deleteEmployee(idEmpleado);
     }
 
     @DeleteMapping
     @RequestMapping("deleteProject")
-    public ResponseEntity<String> deleteProject(@RequestParam(value = "idProyecto") Integer idProyecto){
+    public ResponseEntity<String> deleteProject(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto){
         return employeeService.deleteProject(idProyecto);
     }
 
     @DeleteMapping
     @RequestMapping("deleteEmployeeFromProject")
-    public ResponseEntity<String> deleteEmployeeFromProject(@RequestParam(value = "idProyecto") Integer idProyecto,
-                                                            @RequestParam(value = "idEmpleado") Integer idEmpleado){
+    public ResponseEntity<String> deleteEmployeeFromProject(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto,
+                                                            @RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado){
         return employeeService.deleteEmployeeFromProject(idProyecto,idEmpleado);
     }
 }

@@ -20,68 +20,89 @@ public class Empleados {
     )
     @Column (name = "ID_EMPLEADO")
     private Integer id;
+
     @Column(
             columnDefinition = "VARCHAR(9)",
-            name = "TX_NIF"
+            name = "TX_NIF",
+            unique = true
     )
     private String nif;
+
     @Column(
             columnDefinition = "VARCHAR(30)",
-            name = "TX_NOMBRE"
+            name = "TX_NOMBRE",
+            nullable = false
 
     )
     private String nombre;
+
     @Column(
             columnDefinition = "VARCHAR(40)",
-            name = "TX_APELLIDO1"
+            name = "TX_APELLIDO1",
+            nullable = false
     )
     private String apellido1;
+
     @Column(
             columnDefinition = "VARCHAR(40)",
-            name = "TX_APELLIDO2"
+            name = "TX_APELLIDO2",
+            nullable = false
     )
     private String apellido2;
+
     @Column(
             columnDefinition = "DATE",
-            name = "F_NACIMIENTO"
+            name = "F_NACIMIENTO",
+            nullable = false
     )
     private LocalDate fechaNacimiento;
+
     @Column(
             columnDefinition = "VARCHAR(12)",
-            name = "N_TELEFONO1"
+            name = "N_TELEFONO1",
+            nullable = false
     )
     private String ntelefono1;
 
     @Column(
             columnDefinition = "VARCHAR(12)",
-            name = "N_TELEFONO2"
+            name = "N_TELEFONO2",
+            nullable = false
     )
     private String ntelefono2;
 
     @Column(
             columnDefinition = "VARCHAR(40)",
-            name = "TX_EMAIL"
+            name = "TX_EMAIL",
+            nullable = false
     )
     private String email;
+
     @Column(
             columnDefinition = "DATE",
-            name = "F_ALTA"
+            name = "F_ALTA",
+            nullable = false
     )
     private LocalDate fechaAlta;
+
     @Column(
             columnDefinition = "DATE",
             name = "F_BAJA",
             nullable = true
     )
     private LocalDate fechaBaja;
+
     @Column(
             columnDefinition = "VARCHAR(1)",
-            name = "CX_EDOCIVIL"
+            name = "CX_EDOCIVIL",
+            nullable = false
     )
     private String ecivil;
+
     @Column(
             columnDefinition = "VARCHAR(1)",
-            name = "B_FORMACIONU"
+            name = "B_FORMACIONU",
+            nullable = false
     )
     private String formacionU;
 
