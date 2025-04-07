@@ -22,6 +22,22 @@ export const useProjectsStore = () => {
             this.projects.splice(index, 1);
             const responseProject = await axios.delete('http://localhost:8080/deleteProject?idProyecto=' + proyecto.id);
           },
+          async saveNewProject (proyecto) {
+            let request = 'http://localhost:8080/createProject?desc=' + proyecto.descripcion + "&fInicio=" + proyecto.fInicio
+            if (proyecto.fFinal != "") {
+                request += "&fFin=" + proyecto.fFinal
+            }
+            if (proyecto.lugar != "") {
+                request += "&lugar=" + proyecto.lugar
+            }
+            if (proyecto.observaciones != "") {
+                request += "&obser=" + proyecto.observaciones
+            }
+            
+            const responseProject = await axios.post(request);
+            this.projects.push(responseProject.data)
+            this.dialog = false;
+          },
           hideDialog () {
               this.dialog = false
           },

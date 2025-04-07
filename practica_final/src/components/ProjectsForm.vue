@@ -9,6 +9,7 @@
               sm="6"
             >
               <v-text-field
+                v-model = "descripcion"
                 label="Descripcion Proyecto*"
                 required
               ></v-text-field>
@@ -20,7 +21,7 @@
               sm="6"
             >
               <v-text-field
-                hint="example of helper text only on focus"
+                v-model = "fInicio"
                 label="Fecha de inicio*"
               ></v-text-field>
             </v-col>
@@ -32,7 +33,7 @@
               sm="6"
             >
               <v-text-field
-                hint="example of persistent helper text"
+                v-model = "fFinal"
                 label="Fecha de finalizacion"
                 persistent-hint
               ></v-text-field>
@@ -44,6 +45,7 @@
               sm="6"
             >
               <v-text-field
+                v-model = "lugar"
                 label="Lugar"
               ></v-text-field>
             </v-col>
@@ -55,6 +57,7 @@
               sm="6"
             >
               <v-text-field
+                v-model = "observaciones"
                 label="Observaciones"
               ></v-text-field>
             </v-col>
@@ -71,7 +74,13 @@
             color="primary"
             text="Save"
             variant="tonal"
-            @click.stop="dialog = false"
+            @click ="projectsStore.saveNewProject({
+              'descripcion':descripcion,
+              'fInicio':fInicio,
+              'fFinal':fFinal,
+              'lugar':lugar,
+              'observaciones':observaciones
+            })"
           ></v-btn>
         </v-card-actions>
     </v-card>
@@ -80,8 +89,24 @@
 
 
 <script setup>
-import { shallowRef } from 'vue'
+import {ref} from 'vue'
 import {useProjectsStore} from '../stores/projects'
+
+const descripcion = ref("")
+const fInicio = ref("")
+const fFinal = ref("")
+const lugar = ref("")
+const observaciones = ref("")
+
+const nuevoProyecto = {
+  'descripcion':descripcion.value,
+  'fInicio':fInicio.value,
+  'fFinal':fFinal.value,
+  'lugar':lugar.value,
+  'observaciones':observaciones.value
+}
+
+
 
 const projectsStore = useProjectsStore();
 
