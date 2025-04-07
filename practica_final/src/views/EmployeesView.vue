@@ -2,7 +2,8 @@
   <div>
     <div class="header">
         <h1>Empleados</h1>
-        <v-btn color="#028CF5" style="position:absolute;top:10px;right:10px;">Alta empleado</v-btn>
+        <v-btn @click = "employeesStore.showDialog()" color="#028CF5" style="position:absolute;top:10px;right:10px;">Alta empleado</v-btn>
+        <EmployeesForm v-model="employeesStore.dialog" />
     </div>
     
     <v-table style="border-style: ridge;">
@@ -22,7 +23,7 @@
         </thead>
         <tbody>
         <tr
-            v-for="empleado in employees"
+            v-for="empleado in employeesStore.employees"
             :key="empleado.index"
             style="background-color:#f3f7fb;"
             
@@ -37,7 +38,7 @@
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ecivil}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.formacionU}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
-                <v-btn icon color="error" @click="darEmpleadoDeBaja(empleado)" style="width: 40px; height: 40px;">
+                <v-btn icon color="error" @click="employeesStore.deleteEmployee(empleado)" style="width: 40px; height: 40px;">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
             </td>
@@ -56,21 +57,10 @@
 
 import {onMounted, ref} from "vue"
 import axios from "axios"
+import {useEmployeesStore} from '../stores/employees'
+import EmployeesForm from '../components/EmployeesForm.vue'
 
-const employees = ref([])
-onMounted(async () => {
-    
-  await axios
-    .get('http://localhost:8080/getEmployees')
-    .then(response => {
-      employees.value = response.data
-    })
-   
-})
-
-async function darEmpleadoDeBaja (empleado) {
-  const responseEmployee = await axios.delete('http://localhost:8080/deleteEmployee?idEmpleado=' + empleado.id);
-}
+const employeesStore = useEmployeesStore();
 
 </script>
 

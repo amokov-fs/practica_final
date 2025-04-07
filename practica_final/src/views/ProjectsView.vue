@@ -51,12 +51,6 @@ import {useProjectsStore} from '../stores/projects'
 
 const projectsStore = useProjectsStore();
 
-async function darProyectoDeBaja (proyecto) {
-  const responseProject = await axios.delete('http://localhost:8080/deleteProject?idProyecto=' + proyecto.id);
-  console.log(responseProject)
-}
-
-
 </script>
 
 <style>
