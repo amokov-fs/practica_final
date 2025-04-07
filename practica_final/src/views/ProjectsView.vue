@@ -2,7 +2,8 @@
   <div>
     <div class="header">
         <h1>Proyectos</h1>
-        <v-btn color="#028CF5" style="position:absolute;top:10px;right:10px;">Alta proyecto</v-btn>
+        <v-btn @click = "projectsStore.showDialog()" color="#028CF5" style="position:absolute;top:10px;right:10px;">Alta proyecto</v-btn>
+        <ProjectsForm v-model="projectsStore.dialog" />
     </div>
     <v-table style="border-style: ridge; width:100%;">
         <thead>
@@ -16,7 +17,7 @@
         </thead>
         <tbody>
         <tr
-            v-for="proyecto in projects"
+            v-for="proyecto in projectsStore.projects"
             :key="proyecto.index"
             style="background-color:#f3f7fb;"
             
@@ -26,7 +27,7 @@
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{proyecto.fechaFin}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{proyecto.lugar}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
-                <v-btn icon color="error" @click="accionX" style="width: 40px; height: 40px;">
+                <v-btn icon color="error" @click="projectsStore.deleteProject(proyecto)" style="width: 40px; height: 40px;">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
             </td>
@@ -43,19 +44,18 @@
 
 <script setup>
 
-import {onMounted, ref} from "vue"
+import {onMounted, ref, shallowRef} from "vue"
 import axios from "axios"
+import ProjectsForm from "../components/ProjectsForm.vue"
+import {useProjectsStore} from '../stores/projects'
 
-const projects = ref([])
-onMounted(async () => {
-    
-  await axios
-    .get('http://localhost:8080/getProjects')
-    .then(response => {
-      projects.value = response.data
-    })
-   
-})
+const projectsStore = useProjectsStore();
+
+async function darProyectoDeBaja (proyecto) {
+  const responseProject = await axios.delete('http://localhost:8080/deleteProject?idProyecto=' + proyecto.id);
+  console.log(responseProject)
+}
+
 
 </script>
 

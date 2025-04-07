@@ -37,7 +37,7 @@
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ecivil}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.formacionU}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
-                <v-btn icon color="error" @click="accionX" style="width: 40px; height: 40px;">
+                <v-btn icon color="error" @click="darEmpleadoDeBaja(empleado)" style="width: 40px; height: 40px;">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
             </td>
@@ -67,6 +67,10 @@ onMounted(async () => {
     })
    
 })
+
+async function darEmpleadoDeBaja (empleado) {
+  const responseEmployee = await axios.delete('http://localhost:8080/deleteEmployee?idEmpleado=' + empleado.id);
+}
 
 </script>
 
