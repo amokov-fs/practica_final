@@ -1,11 +1,10 @@
 <template>
-  <h1>Home View</h1>
+  <h1>Inicio</h1>
+  
 </template>
 
-<script>
+<script setup>
+  import { ref } from 'vue'
 
+  const selected = ref(['John'])
 </script>
-
-<style>
-
-</style>

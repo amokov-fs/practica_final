@@ -33,7 +33,7 @@ public class Controller {
 
     @GetMapping
     @RequestMapping("getProjectEmployees")
-    public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto){
+    public ResponseEntity<List<Empleados>> getProjectEmployees(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto){
         return employeeService.getProjectEmployees(idProyecto);
     }
 

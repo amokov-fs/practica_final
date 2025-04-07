@@ -7,7 +7,7 @@
     
     <v-table style="border-style: ridge;">
         <thead>
-        <tr style="background-color:#d4f1ff;">
+        <tr style="background-color:#026fc1;color:white;">
             <th style="border-style: ridge; border-color:black;border-width:thin;">NIF</th>
             <th style="border-style: ridge; border-color:black;border-width:thin;">Nombre</th>
             <th style="border-style: ridge; border-color:black;border-width:thin;">1º Apellido</th>
@@ -24,19 +24,23 @@
         <tr
             v-for="empleado in employees"
             :key="empleado.index"
-            style="background-color:#028CF5;"
+            style="background-color:#f3f7fb;"
             
         >
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nif}} &nbsp; </td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nombre}} &nbsp;</td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.apellido1}} &nbsp;</td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.apellido2}} &nbsp;</td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.fechaNacimiento}} &nbsp;</td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ntelefono1}} &nbsp;</td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.email}} &nbsp;</td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ecivil}} &nbsp;</td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.formacionU}} &nbsp;</td>
-            <td class = "text-white" style="border-style: ridge; border-color:black;border-width:thin;"><v-btn color="#028CF5">X</v-btn></td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nif}} &nbsp; </td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nombre}} &nbsp;</td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.apellido1}} &nbsp;</td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.apellido2}} &nbsp;</td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.fechaNacimiento}} &nbsp;</td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ntelefono1}} &nbsp;</td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.email}} &nbsp;</td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ecivil}} &nbsp;</td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.formacionU}} &nbsp;</td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">
+                <v-btn icon color="error" @click="accionX" style="width: 40px; height: 40px;">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </td>
         </tr>
         </tbody>
     </v-table>

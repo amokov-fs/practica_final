@@ -42,8 +42,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new ResponseEntity<>(proyectos, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(Integer idProyecto){
-        List<EmpleadoAProyecto> empleadosProyecto = empleadoAProyectoRepository.getEmployeesProject(idProyecto);
+    public ResponseEntity<List<Empleados>> getProjectEmployees(Integer idProyecto){
+        List<Empleados> empleadosProyecto = empleadoAProyectoRepository.getEmployeesProject(idProyecto);
         return new ResponseEntity<>(empleadosProyecto, HttpStatus.OK);
     }
 

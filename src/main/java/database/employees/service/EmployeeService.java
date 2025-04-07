@@ -16,7 +16,7 @@ public interface EmployeeService {
 
     public ResponseEntity<List<Proyectos>> getProjects();
 
-    public ResponseEntity<List<EmpleadoAProyecto>> getProjectEmployees(Integer idProyecto);
+    public ResponseEntity<List<Empleados>> getProjectEmployees(Integer idProyecto);
     public ResponseEntity<Empleados> createEmployee(String nifEmpleado,
                                                     String nombreEmpleado,
                                                     String ap1Empleado,
