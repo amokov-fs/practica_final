@@ -1,4 +1,5 @@
 <template>
+  <div>
     <h1>Hola</h1>
     <v-select
         clearable
@@ -16,15 +17,7 @@
     <v-table style="border-style: ridge;">
         <thead>
         <tr style="background-color:#026fc1;color:white;">
-            <th style="border-style: ridge; border-color:black;border-width:thin;">NIF</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Nombre</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">1º Apellido</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">2º Apellido</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Fecha de nacimiento</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">1º Telefono</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Email</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Estado Civil</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Formacion universitaria</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;">Nombre completo</th>
             <th style="border-style: ridge; border-color:black;border-width:thin;"></th>
         </tr>
         </thead>
@@ -34,15 +27,7 @@
             :key="empleado.index"
             style="background-color:#f3f7fb;"
         >
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nif}} &nbsp; </td>
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nombre}} &nbsp;</td>
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.apellido1}} &nbsp;</td>
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.apellido2}} &nbsp;</td>
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.fechaNacimiento}} &nbsp;</td>
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ntelefono1}} &nbsp;</td>
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.email}} &nbsp;</td>
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ecivil}} &nbsp;</td>
-            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.formacionU}} &nbsp;</td>
+            <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nombre}} {{empleado.apellido1}} {{empleado.apellido2}}</td>
             <td  style="border-style: ridge; border-color:black;border-width:thin;">
                 <v-checkbox
                     :model-value="estaAsignado(empleado)"
@@ -54,6 +39,7 @@
         </tr>
         </tbody>
     </v-table>
+  </div>
     
 </template>
 
