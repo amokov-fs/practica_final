@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 
 import axios from "axios"
 
+import Swal from 'sweetalert2';
+
 export const useEmployeesStore = () => {
     const EmployeesStore = defineStore('EmployeesStore', {
         state: () => ({ 
@@ -23,9 +25,9 @@ export const useEmployeesStore = () => {
             const responseProject = await axios.delete('http://localhost:8080/deleteEmployee?idEmpleado=' + empleado.id);
           },
           async saveNewEmployee (empleado) {
-            console.log(empleado)
             
             let request = 'http://localhost:8080/createEmployee?nifEmpleado=' + empleado.nif
+            
             request += "&nombreEmpleado=" + empleado.nombre
             request += "&ap1Empleado=" + empleado.apellido1
             request += "&ap2Empleado=" + empleado.apellido2
@@ -36,12 +38,25 @@ export const useEmployeesStore = () => {
             request += "&fAltaEmpleado=" + empleado.fechaAlta
             request += "&edoEmpleado=" + empleado.ecivil
             request += "&uniEmpleado=" + empleado.formacionU
-            
-            
-            const responseEmployee = await axios.post(request);
-            this.employees.push(responseEmployee.data)
-            this.dialog = false;
-            
+
+            try {
+              const responseEmployee = await axios.post(request);
+              this.employees.push(responseEmployee.data);
+              this.dialog = false;
+              
+            } catch (error) {
+              this.dialog = false;
+              Swal.fire({
+                title: error.response.data.error,
+                icon: "error",
+                draggable: true
+              });
+            }    
+            Swal.fire({
+              title: "Usuario creado",
+              icon: "success",
+              draggable: true
+            });        
           },
           hideDialog () {
               this.dialog = false

@@ -98,11 +98,11 @@
         <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn text="Close" variant="plain" @click.stop="employeesStore.hideDialog()"></v-btn>
+            <v-btn text="Cancelar" variant="plain" @click.stop="employeesStore.hideDialog()"></v-btn>
 
             <v-btn
                 color="primary"
-                text="Save"
+                text="Guardar"
                 variant="tonal"
                 @click ="employeesStore.saveNewEmployee({
                     'apellido1': ap1,
@@ -140,6 +140,7 @@ const tlf2 = ref("")
 const email = ref("")
 const edoCivil = ref("")
 const formacionU = ref("")
+
 
 const employeesStore = useEmployeesStore();
 

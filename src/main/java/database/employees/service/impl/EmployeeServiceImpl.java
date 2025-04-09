@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new ResponseEntity<>(empleadosProyecto, HttpStatus.OK);
     }
 
-    public ResponseEntity<Empleados> createEmployee(String nifEmpleado,
+    public ResponseEntity<String> createEmployee(String nifEmpleado,
                                                     String nombreEmpleado,
                                                     String ap1Empleado,
                                                     String ap2Empleado,
@@ -75,7 +75,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                                             uniEmpleado);
 
         empleadosRepository.save(empleado);
-        return new ResponseEntity<>(empleado, HttpStatus.CREATED);
+        return new ResponseEntity<>(empleado.toString(), HttpStatus.CREATED);
     }
 
     public ResponseEntity<Proyectos> createProject(String desc,

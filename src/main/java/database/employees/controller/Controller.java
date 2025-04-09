@@ -39,11 +39,11 @@ public class Controller {
 
     @PostMapping
     @RequestMapping("createEmployee")
-    public ResponseEntity<Empleados> createEmployee(
+    public ResponseEntity<String> createEmployee(
             @RequestParam(value = "nifEmpleado", required = false) @Pattern(regexp = "[0-9]{8}[A-z]", message = "El NIF debe tener 8 números y una letra") String nifEmpleado,
             @RequestParam(value = "nombreEmpleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+", message = "El nombre solo puede tener letras") String nombreEmpleado,
-            @RequestParam(value = "ap1Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[-]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido solo puede tener letras y un guión") String ap1Empleado,
-            @RequestParam(value = "ap2Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[-]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido solo puede tener letras y un guión") String ap2Empleado,
+            @RequestParam(value = "ap1Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido solo puede tener letras y un guión") String ap1Empleado,
+            @RequestParam(value = "ap2Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido solo puede tener letras y un guión") String ap2Empleado,
             @RequestParam(value = "fNacEmpleado") @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de nacimiento incorrecta") String fNacEmpleado,
             @RequestParam(value = "tlf1Empleado") @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono incorrecto") String tlf1Empleado,
             @RequestParam(value = "tlf2Empleado") @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono incorrecto") String tlf2Empleado,
