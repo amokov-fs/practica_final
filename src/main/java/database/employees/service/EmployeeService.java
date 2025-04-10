@@ -14,6 +14,8 @@ public interface EmployeeService {
 
     public ResponseEntity<List<Empleados>> getEmployees();
 
+    public ResponseEntity<Empleados> getEmployeeById(Integer idEmpleado);
+
     public ResponseEntity<List<Proyectos>> getProjects();
 
     public ResponseEntity<List<Empleados>> getProjectEmployees(Integer idProyecto);
@@ -28,6 +30,8 @@ public interface EmployeeService {
                                                     String fAltaEmpleado,
                                                     String edoEmpleado,
                                                     String uniEmpleado);
+
+    public ResponseEntity<String> updateEmployee(Empleados empleadoActualizado);
 
     public ResponseEntity<Proyectos> createProject(String desc,
                                                    String fInicio,

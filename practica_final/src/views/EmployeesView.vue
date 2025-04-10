@@ -19,6 +19,7 @@
             <th style="border-style: ridge; border-color:black;border-width:thin;width:10%;">Estado Civil</th>
             <th style="border-style: ridge; border-color:black;border-width:thin;width:11%;">Formación universitaria</th>
             <th style="border-style: ridge; border-color:black;border-width:thin;width:4%;"></th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;width:4%;"></th>
         </tr>
         </thead>
         <tbody>
@@ -35,8 +36,8 @@
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.fechaNacimiento}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ntelefono1}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.email}} &nbsp;</td>
-            <td v-if="empleado.ecivil == 'S'" style="border-style: ridge; border-color:black;border-width:thin;">Soltero</td>
-            <td v-if="empleado.ecivil == 'C'" style="border-style: ridge; border-color:black;border-width:thin;">Casado</td>
+            <td v-if="empleado.ecivil == 'S'" style="border-style: ridge; border-color:black;border-width:thin;">Soltero/a</td>
+            <td v-if="empleado.ecivil == 'C'" style="border-style: ridge; border-color:black;border-width:thin;">Casado/a</td>
             <td v-if="empleado.formacionU == 'S'" style="border-style: ridge; border-color:black;border-width:thin;">Si</td>
             <td v-if="empleado.formacionU == 'N'" style="border-style: ridge; border-color:black;border-width:thin;">No</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
@@ -44,9 +45,16 @@
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
             </td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">
+                <v-btn @click = "employeesStore.showEditDialog(empleado.id)" icon style="width: 40px; height: 40px;">
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+            </td>
         </tr>
         </tbody>
     </v-table>
+
+    <EditEmployee v-model="employeesStore.editDialog" />
     
     <div >
         
@@ -61,6 +69,7 @@ import {onMounted, ref} from "vue"
 import axios from "axios"
 import {useEmployeesStore} from '../stores/employees'
 import EmployeesForm from '../components/EmployeesForm.vue'
+import EditEmployee from '../components/EditEmployee.vue'
 
 const employeesStore = useEmployeesStore();
 

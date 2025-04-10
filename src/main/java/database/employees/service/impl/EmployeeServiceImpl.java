@@ -38,6 +38,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new ResponseEntity<>(empleados, HttpStatus.OK);
     }
 
+    public ResponseEntity<Empleados> getEmployeeById(Integer idEmpleado) {
+        Empleados empleado = empleadosRepository.getEmployeeById(idEmpleado);
+        return new ResponseEntity<>(empleado, HttpStatus.OK);
+    }
+
     public ResponseEntity<List<Proyectos>> getProjects(){
 
         List<Proyectos> proyectos = proyectosRepository.getAll();
@@ -129,6 +134,23 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new ProjectHasEmployeesException("No se puede dar de baja al empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() +" porque está asignado a el/los proyecto/s " + proyectosEmpleado);
         }
         return new ResponseEntity<>("El empleado no existe", HttpStatus.NO_CONTENT);
+    }
+
+    public ResponseEntity<String> updateEmployee(Empleados empleadoActualizado) {
+        Empleados empleado = empleadosRepository.getEmployeeById(empleadoActualizado.getId());
+        empleado.setNombre(empleadoActualizado.getNombre());
+        empleado.setNif(empleadoActualizado.getNif());
+        empleado.setApellido1(empleadoActualizado.getApellido1());
+        empleado.setApellido2(empleadoActualizado.getApellido2());
+        empleado.setFechaNacimiento(empleadoActualizado.getFechaNacimiento());
+        empleado.setFechaAlta(empleadoActualizado.getFechaAlta());
+        empleado.setNtelefono1(empleadoActualizado.getNtelefono1());
+        empleado.setNtelefono2(empleadoActualizado.getNtelefono2());
+        empleado.setEmail(empleadoActualizado.getEmail());
+        empleado.setEcivil(empleadoActualizado.getEcivil());
+        empleado.setFormacionU(empleadoActualizado.getFormacionU());
+        empleadosRepository.save(empleado);
+        return new ResponseEntity<>("Empleado editado", HttpStatus.OK);
     }
 
     public ResponseEntity<String> deleteProject(Integer idProyecto){

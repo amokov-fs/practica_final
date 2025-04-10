@@ -5,6 +5,8 @@ import Swal from 'sweetalert2'
 export const useEmployeesStore = defineStore('EmployeesStore', {
   state: () => ({
     dialog: false,
+    editDialog: false,
+    employeeToEdit: {},
     employees: []
   }),
 
@@ -14,9 +16,14 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
       this.employees = response.data
     },
 
+    async getEmployeeById(idEmpleado) {
+      const response = await axios.get('http://localhost:8080/getEmployeeById?idEmpleado='+idEmpleado)
+      return response.data
+    },
+
     async deleteEmployee(empleado) {
       Swal.fire({
-        title: "¿Quieres borrar el empleado?",
+        title: "¿Quieres borrar el/la empleado/a?",
         showDenyButton: true,
         confirmButtonText: "Continuar",
         denyButtonText: `Cancelar`
@@ -26,20 +33,20 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
             const responseEmployee = await axios.delete('http://localhost:8080/deleteEmployee?idEmpleado=' + empleado.id)
             await this.getActiveEmployees();      
             Swal.fire({
-              title: 'Empleado borrado',
+              title: 'Empleado/a borrado/a',
               icon: 'success',
               draggable: true
             })
           } catch (error) {
             this.dialog = false
             Swal.fire({
-              title: error.response?.data?.error || 'Error al borrar empleado',
+              title: error.response?.data?.error || 'Error al borrar empleado/a',
               icon: 'error',
               draggable: true
             })
           }
         } else if (result.isDenied) {
-          Swal.fire("No se ha borrado el empleado", "", "info");
+          Swal.fire("No se ha borrado el/la empleado/a", "", "info");
         }
       });
     },
@@ -61,7 +68,7 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
       request += "&uniEmpleado=" + empleado.formacionU
       this.dialog = false
       Swal.fire({
-        title: "¿Quieres crear el empleado?",
+        title: "¿Quieres crear el/la empleado/a?",
         showDenyButton: true,
         confirmButtonText: "Continuar",
         denyButtonText: `Cancelar`
@@ -71,7 +78,7 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
             const response = await axios.post(request)
             await this.getActiveEmployees();    
             Swal.fire({
-              title: 'Usuario creado',
+              title: 'Empleado/a creado/a',
               icon: 'success',
               draggable: true
             })
@@ -79,13 +86,13 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
             console.log(error.response.data.error)
             
             Swal.fire({
-              title: error.response?.data?.error || 'Error al crear empleado',
+              title: error.response?.data?.error || 'Error al crear empleado/a',
               icon: 'error',
               draggable: true
             })
           }
         } else if (result.isDenied) {
-          Swal.fire("No se ha creado el empleado", "", "info");
+          Swal.fire("No se ha creado el/la empleado/a", "", "info");
         }
       });
     },
@@ -96,6 +103,58 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
 
     showDialog() {
       this.dialog = true
+    },
+    hideEditDialog() {
+      this.editDialog = false
+    },
+    async showEditDialog(idEmpleado) {
+      this.editDialog = true
+      let empleado = await this.getEmployeeById(idEmpleado);
+      this.employeeToEdit = empleado
+    }, 
+    async editEmployee() {
+      this.editDialog = false
+      Swal.fire({
+        title: "¿Quieres editar el/la empleado/a?",
+        showDenyButton: true,
+        confirmButtonText: "Continuar",
+        denyButtonText: `Cancelar`
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const index = this.employees.findIndex(e => e.id === this.employeeToEdit.id);
+            this.employees[index] = this.employeeToEdit
+            console.log(this.employeeToEdit)
+            const url = "http://localhost:8080/updateEmployee"
+            axios.put(url, this.employeeToEdit)
+            .then(response => {
+              console.log('Respuesta del servidor:', response.data);
+            })
+            .catch(error => {
+              console.error('Error al hacer PUT:', error);
+            });
+            /*
+            const response = await axios.post(request)
+            await this.getActiveEmployees(); 
+            */   
+            Swal.fire({
+              title: 'Empleado/a editado/a',
+              icon: 'success',
+              draggable: true
+            })
+          } catch (error) {            
+            Swal.fire({
+              title: error.response?.data?.error || 'Error al editar empleado/a',
+              icon: 'error',
+              draggable: true
+            })
+          }
+        } else if (result.isDenied) {
+          Swal.fire("No se ha editado el/la empleado/a", "", "info");
+        }
+      });
     }
+
+
   }
 })

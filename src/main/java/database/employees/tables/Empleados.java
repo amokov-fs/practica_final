@@ -1,6 +1,8 @@
 package database.employees.tables;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.sql.Date;
 
@@ -20,14 +22,14 @@ public class Empleados {
     )
     @Column (name = "ID_EMPLEADO")
     private Integer id;
-
+    @Pattern(regexp = "[0-9]{8}[A-z]", message = "El NIF debe tener 8 números y una letra")
     @Column(
             columnDefinition = "VARCHAR(9)",
             name = "TX_NIF",
             unique = true
     )
     private String nif;
-
+    @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[ ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El nombre solo puede tener letras")
     @Column(
             columnDefinition = "VARCHAR(30)",
             name = "TX_NOMBRE",
@@ -35,35 +37,35 @@ public class Empleados {
 
     )
     private String nombre;
-
+    @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido 1 solo puede tener letras y/o un guión intercalado")
     @Column(
             columnDefinition = "VARCHAR(40)",
             name = "TX_APELLIDO1",
             nullable = false
     )
     private String apellido1;
-
+    @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido 2 solo puede tener letras y/o un guión intercalado")
     @Column(
             columnDefinition = "VARCHAR(40)",
             name = "TX_APELLIDO2",
             nullable = false
     )
     private String apellido2;
-
+    @NotNull
     @Column(
             columnDefinition = "DATE",
             name = "F_NACIMIENTO",
             nullable = false
     )
     private Date fechaNacimiento;
-
+    @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono 1 incorrecto")
     @Column(
             columnDefinition = "VARCHAR(12)",
             name = "N_TELEFONO1",
             nullable = false
     )
     private String ntelefono1;
-
+    @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono 2 incorrecto")
     @Column(
             columnDefinition = "VARCHAR(12)",
             name = "N_TELEFONO2"
@@ -76,7 +78,7 @@ public class Empleados {
             nullable = false
     )
     private String email;
-
+    @NotNull
     @Column(
             columnDefinition = "DATE",
             name = "F_ALTA",
@@ -90,14 +92,14 @@ public class Empleados {
             nullable = true
     )
     private Date fechaBaja;
-
+    @Pattern(regexp = "[S|C]", message = "Estado civil incorrecto")
     @Column(
             columnDefinition = "VARCHAR(1)",
             name = "CX_EDOCIVIL",
             nullable = false
     )
     private String ecivil;
-
+    @Pattern(regexp = "[S|N]", message = "Formación universitaria incorrecta")
     @Column(
             columnDefinition = "VARCHAR(1)",
             name = "B_FORMACIONU",

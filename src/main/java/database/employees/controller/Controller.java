@@ -4,6 +4,7 @@ import database.employees.service.EmployeeService;
 import database.employees.tables.Empleados;
 import database.employees.tables.EmpleadoAProyecto;
 import database.employees.tables.Proyectos;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -23,6 +24,12 @@ public class Controller {
     @RequestMapping("getEmployees")
     public ResponseEntity<List<Empleados>> getEmployees(){
         return employeeService.getEmployees();
+    }
+
+    @GetMapping
+    @RequestMapping("getEmployeeById")
+    public ResponseEntity<Empleados> getEmployeeById(@RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado) {
+        return employeeService.getEmployeeById(idEmpleado);
     }
 
     @GetMapping
@@ -82,6 +89,12 @@ public class Controller {
                                                            @RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado,
                                                            @RequestParam(value = "fAlta", required = false) @Pattern(regexp = "([0-9]{4})[-](0[1-9]|1[012])[-]([012][0-9]|3[0-1])") String fAlta) {
         return employeeService.assignEmployeeToProject(idProyecto,idEmpleado,fAlta);
+    }
+
+    @PutMapping
+    @RequestMapping("updateEmployee")
+    public ResponseEntity<String> updateEmployee(@Valid @RequestBody Empleados empleado) {
+        return employeeService.updateEmployee(empleado);
     }
 
     @DeleteMapping
