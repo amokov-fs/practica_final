@@ -9,22 +9,22 @@
     <v-table style="border-style: ridge;">
         <thead>
         <tr style="background-color:#026fc1;color:white;">
-            <th style="border-style: ridge; border-color:black;border-width:thin;">NIF</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Nombre</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">1º Apellido</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">2º Apellido</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Fecha de nacimiento</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">1º Telefono</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Email</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Estado Civil</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;">Formacion universitaria</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;"></th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">NIF</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">Nombre</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">1º Apellido</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">2º Apellido</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">Fecha de nacimiento</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">1º Telefono</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:15%;">Email</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;width:10%;">Estado Civil</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;width:11%;">Formación universitaria</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;width:4%;"></th>
         </tr>
         </thead>
         <tbody>
         <tr
             v-for="empleado in employeesStore.employees"
-            :key="empleado.index"
+            :key="empleado.id"
             style="background-color:#f3f7fb;"
             
         >
@@ -35,8 +35,10 @@
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.fechaNacimiento}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ntelefono1}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.email}} &nbsp;</td>
-            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.ecivil}} &nbsp;</td>
-            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.formacionU}} &nbsp;</td>
+            <td v-if="empleado.ecivil == 'S'" style="border-style: ridge; border-color:black;border-width:thin;">Soltero</td>
+            <td v-if="empleado.ecivil == 'C'" style="border-style: ridge; border-color:black;border-width:thin;">Casado</td>
+            <td v-if="empleado.formacionU == 'S'" style="border-style: ridge; border-color:black;border-width:thin;">Si</td>
+            <td v-if="empleado.formacionU == 'N'" style="border-style: ridge; border-color:black;border-width:thin;">No</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
                 <v-btn icon color="error" @click="employeesStore.deleteEmployee(empleado)" style="width: 40px; height: 40px;">
                   <v-icon>mdi-close</v-icon>
@@ -61,6 +63,12 @@ import {useEmployeesStore} from '../stores/employees'
 import EmployeesForm from '../components/EmployeesForm.vue'
 
 const employeesStore = useEmployeesStore();
+
+onMounted(() => {
+  if (employeesStore.employees.length === 0) {
+    employeesStore.getActiveEmployees()
+  }
+})
 
 </script>
 

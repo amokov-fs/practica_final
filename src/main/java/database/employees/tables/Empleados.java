@@ -66,8 +66,7 @@ public class Empleados {
 
     @Column(
             columnDefinition = "VARCHAR(12)",
-            name = "N_TELEFONO2",
-            nullable = false
+            name = "N_TELEFONO2"
     )
     private String ntelefono2;
 

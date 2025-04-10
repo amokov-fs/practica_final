@@ -62,8 +62,7 @@
                 <v-col md="6">
                     <v-text-field
                     v-model = "tlf2"
-                    label="Telefono 2*"
-                    required
+                    label="Telefono 2"
                     ></v-text-field>
                 </v-col>
             </v-row>
@@ -126,7 +125,7 @@
 
 <script setup>
 
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useEmployeesStore} from '../stores/employees'
 
 const nif = ref("")
@@ -143,6 +142,8 @@ const formacionU = ref("")
 
 
 const employeesStore = useEmployeesStore();
+
+
 
 </script>
 

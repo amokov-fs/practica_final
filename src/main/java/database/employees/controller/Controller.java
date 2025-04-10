@@ -40,13 +40,13 @@ public class Controller {
     @PostMapping
     @RequestMapping("createEmployee")
     public ResponseEntity<String> createEmployee(
-            @RequestParam(value = "nifEmpleado", required = false) @Pattern(regexp = "[0-9]{8}[A-z]", message = "El NIF debe tener 8 números y una letra") String nifEmpleado,
-            @RequestParam(value = "nombreEmpleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+", message = "El nombre solo puede tener letras") String nombreEmpleado,
-            @RequestParam(value = "ap1Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido solo puede tener letras y un guión") String ap1Empleado,
-            @RequestParam(value = "ap2Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido solo puede tener letras y un guión") String ap2Empleado,
+            @RequestParam(value = "nifEmpleado") @Pattern(regexp = "[0-9]{8}[A-z]", message = "El NIF debe tener 8 números y una letra") String nifEmpleado,
+            @RequestParam(value = "nombreEmpleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[ ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El nombre solo puede tener letras") String nombreEmpleado,
+            @RequestParam(value = "ap1Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido 1 solo puede tener letras y/o un guión intercalado") String ap1Empleado,
+            @RequestParam(value = "ap2Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido 2 solo puede tener letras y/o un guión intercalado") String ap2Empleado,
             @RequestParam(value = "fNacEmpleado") @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de nacimiento incorrecta") String fNacEmpleado,
-            @RequestParam(value = "tlf1Empleado") @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono incorrecto") String tlf1Empleado,
-            @RequestParam(value = "tlf2Empleado") @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono incorrecto") String tlf2Empleado,
+            @RequestParam(value = "tlf1Empleado") @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono 1 incorrecto") String tlf1Empleado,
+            @RequestParam(value = "tlf2Empleado", required = false) @Pattern(regexp = "([679][0-9]{8})?", message = "Teléfono 2 incorrecto") String tlf2Empleado,
             @RequestParam(value = "emailEmpleado") @Pattern(regexp = "[a-z0-9]+[@][a-z]+[.][a-z]+", message = "Email incorrecto") String emailEmpleado,
             @RequestParam(value = "fAltaEmpleado") @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de alta incorrecta") String fAltaEmpleado,
             @RequestParam(value = "edoEmpleado") @Pattern(regexp = "[S|C]", message = "Estado civil incorrecto") String edoEmpleado,
