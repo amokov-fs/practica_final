@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Hola</h1>
+    <h1>Asignaciones de empleados a proyectos</h1>
     <v-select
         clearable
         v-model = "employeesToProjectsStore.selectedProject"
