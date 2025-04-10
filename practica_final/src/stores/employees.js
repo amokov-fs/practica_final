@@ -1,4 +1,3 @@
-// stores/EmployeesStore.ts o .js
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import Swal from 'sweetalert2'

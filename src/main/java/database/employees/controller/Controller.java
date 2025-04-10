@@ -66,7 +66,7 @@ public class Controller {
 
     @PostMapping
     @RequestMapping("createProject")
-    public ResponseEntity<Proyectos> createProject(@RequestParam(value = "desc") @NotNull String desc,
+    public ResponseEntity<Proyectos> createProject(@RequestParam(value = "desc") @Pattern(regexp = "[A-zÀ-ÿ0-9 -*+/]+", message = "La descripcion no puede estar vacia") String desc,
                                                     @RequestParam(value = "fInicio")
                                                         @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de inicio incorrecta") String fInicio,
                                                     @RequestParam(value = "fFin", required = false)

@@ -1,5 +1,5 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import Swal from 'sweetalert2'
 
 import axios from "axios"
 
@@ -34,9 +34,24 @@ export const useProjectsStore = () => {
                 request += "&obser=" + proyecto.observaciones
             }
             
-            const responseProject = await axios.post(request);
-            this.projects.push(responseProject.data)
-            this.dialog = false;
+            try {
+                const response = await axios.post(request)
+                await this.getActiveProjects();
+                this.dialog = false
+        
+                Swal.fire({
+                  title: 'Proyecto creado',
+                  icon: 'success',
+                  draggable: true
+                })
+              } catch (error) {
+                this.dialog = false
+                Swal.fire({
+                  title: error.response?.data?.error || 'Error al crear proyecto',
+                  icon: 'error',
+                  draggable: true
+                })
+              }
           },
           hideDialog () {
               this.dialog = false
