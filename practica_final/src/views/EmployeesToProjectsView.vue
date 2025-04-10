@@ -31,7 +31,7 @@
             <td  style="border-style: ridge; border-color:black;border-width:thin;">
                 <v-checkbox
                     :model-value="employeesToProjectsStore.estaAsignado(empleado.id)"
-                    @change="() => employeesToProjectsStore.modificarAsignacion(empleado.id)"
+                    @click.prevent="() => employeesToProjectsStore.modificarAsignacion(empleado.id)"
                     hide-details
                     density="compact"
                 ></v-checkbox>

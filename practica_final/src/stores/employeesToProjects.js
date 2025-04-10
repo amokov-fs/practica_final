@@ -28,11 +28,63 @@ export const useEmployeesToProjectsStore = defineStore('EmployeesToProjectsStore
                 const index = this.asignaciones[this.selectedProject].indexOf(idEmpleado);
 
                 if (index === -1) {
-                    this.asignaciones[this.selectedProject].push(idEmpleado);
-                    const responseProjectEmployees = await axios.post('http://localhost:8080/assignEmployeeToProject?idProyecto=' + this.selectedProject+'&idEmpleado='+idEmpleado);
+                    Swal.fire({
+                        title: "¿Quieres asignar el empleado " + idEmpleado + " al proyecto " + this.selectedProject,
+                        showDenyButton: true,
+                        confirmButtonText: "Continuar",
+                        denyButtonText: `Cancelar`
+                      }).then(async (result) => {
+                        if (result.isConfirmed) {
+                          try {
+                            const responseProjectEmployees = await axios.post('http://localhost:8080/assignEmployeeToProject?idProyecto=' + this.selectedProject+'&idEmpleado='+idEmpleado);
+                            await this.getAsignacionesProyecto();      
+                            Swal.fire({
+                              title: 'Empleado '+ idEmpleado + " asignado al proyecto " + this.selectedProject,
+                              icon: 'success',
+                              draggable: true
+                            })
+                          } catch (error) {
+                            this.dialog = false
+                            Swal.fire({
+                              title: error.response?.data?.error || 'Error al asignar el empleado ' + idEmpleado + " al proyecto " + this.selectedProject,
+                              icon: 'error',
+                              draggable: true
+                            })
+                          }
+                        } else if (result.isDenied) {
+                          Swal.fire("No se ha asignado el empleado " + idEmpleado + " al proyecto " + this.selectedProject, "", "info");
+                        }
+                      });
+                    
                 } else {
-                    this.asignaciones[this.selectedProject].splice(index, 1);
-                    const responseProjectEmployees = await axios.delete('http://localhost:8080/deleteEmployeeFromProject?idProyecto=' + this.selectedProject+'&idEmpleado='+idEmpleado);
+                    Swal.fire({
+                        title: "¿Quieres borrar el empleado " + idEmpleado + " del proyecto " + this.selectedProject,
+                        showDenyButton: true,
+                        confirmButtonText: "Continuar",
+                        denyButtonText: `Cancelar`
+                      }).then(async (result) => {
+                        if (result.isConfirmed) {
+                          try {
+                            const responseProjectEmployees = await axios.delete('http://localhost:8080/deleteEmployeeFromProject?idProyecto=' + this.selectedProject+'&idEmpleado='+idEmpleado);
+                            await this.getAsignacionesProyecto();      
+                            Swal.fire({
+                              title: 'Empleado '+ idEmpleado + " borrado del proyecto " + this.selectedProject,
+                              icon: 'success',
+                              draggable: true
+                            })
+                          } catch (error) {
+                            this.dialog = false
+                            Swal.fire({
+                              title: error.response?.data?.error || 'Error al borrar el empleado ' + idEmpleado + " del proyecto " + this.selectedProject,
+                              icon: 'error',
+                              draggable: true
+                            })
+                          }
+                        } else if (result.isDenied) {
+                          Swal.fire("No se ha borrado el empleado " + idEmpleado + " del proyecto " + this.selectedProject, "", "info");
+                        }
+                      });
+                    
                 }
             }
         }
