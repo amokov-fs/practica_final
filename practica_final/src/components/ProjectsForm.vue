@@ -22,7 +22,7 @@
             >
               <v-text-field
                 v-model = "fInicio"
-                label="Fecha de inicio*"
+                label="Fecha de inicio* (yyyy-mm-dd)"
               ></v-text-field>
             </v-col>
             </v-row>
@@ -34,7 +34,7 @@
             >
               <v-text-field
                 v-model = "fFinal"
-                label="Fecha de finalizacion"
+                label="Fecha de finalizacion (yyyy-mm-dd)"
                 persistent-hint
               ></v-text-field>
             </v-col>

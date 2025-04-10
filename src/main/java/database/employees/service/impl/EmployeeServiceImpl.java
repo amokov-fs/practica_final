@@ -1,5 +1,6 @@
 package database.employees.service.impl;
 
+import database.employees.exceptions.ProjectHasEmployeesException;
 import database.employees.repositories.EmpleadoAProyectoRepository;
 import database.employees.repositories.EmpleadosRepository;
 import database.employees.repositories.ProyectosRepository;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -58,9 +60,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                                                     String fAltaEmpleado,
                                                     String edoEmpleado,
                                                     String uniEmpleado){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate fechaNacimiento = LocalDate.parse(fNacEmpleado, formatter);
-        LocalDate fechaAlta = LocalDate.parse(fAltaEmpleado, formatter);
+        Date fechaNacimiento = Date.valueOf(fNacEmpleado);
+        Date fechaAlta = Date.valueOf(fAltaEmpleado);
 
         Empleados empleado = new Empleados(nifEmpleado,
                                             nombreEmpleado,
@@ -83,11 +84,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                                                    String fFin,
                                                    String lugar,
                                                    String obser){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate fechaInicio = LocalDate.parse(fInicio, formatter);
-        LocalDate fechaFin = null;
+        Date fechaInicio = Date.valueOf(fInicio);
+        Date fechaFin = null;
         if(fFin != null){
-            fechaFin = LocalDate.parse(fFin, formatter);
+            fechaFin = Date.valueOf(fFin);
         }
 
 
@@ -122,7 +122,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (empleadoAEliminar != null) {
             List<Integer> proyectosEmpleado = empleadoAProyectoRepository.getProjectsIdEmployee(idEmpleado);
             if (proyectosEmpleado.isEmpty()){
-                empleadoAEliminar.setFechaBaja(LocalDate.now());
+                empleadoAEliminar.setFechaBaja(new Date(System.currentTimeMillis()));
                 empleadosRepository.save(empleadoAEliminar);
                 return new ResponseEntity<>("Empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() + " eliminado", HttpStatus.OK);
             }
@@ -138,11 +138,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (proyectoAEliminar != null) {
             List<Integer> empleadosProyecto = empleadoAProyectoRepository.getEmployeesIdProject(idProyecto);
             if (empleadosProyecto.isEmpty()){
-                proyectoAEliminar.setFechaBaja(LocalDate.now());
+                proyectoAEliminar.setFechaBaja(new Date(System.currentTimeMillis()));
                 proyectosRepository.save(proyectoAEliminar);
                 return new ResponseEntity<>("Proyecto " + proyectoAEliminar.getDescripcion() + " eliminado", HttpStatus.OK);
             }
-            return new ResponseEntity<>("No se puede dar de baja al proyecto " + proyectoAEliminar.getDescripcion() +" porque está asignado a el/los empleado/s " + empleadosProyecto.toString(), HttpStatus.BAD_REQUEST);
+            throw new ProjectHasEmployeesException("No se puede dar de baja al proyecto " + proyectoAEliminar.getDescripcion() +" porque está asignado a el/los empleado/s " + empleadosProyecto);
 
         }
         return new ResponseEntity<>("El proyecto no existe", HttpStatus.NO_CONTENT);

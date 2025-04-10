@@ -2,7 +2,7 @@ package database.employees.tables;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -55,7 +55,7 @@ public class Empleados {
             name = "F_NACIMIENTO",
             nullable = false
     )
-    private LocalDate fechaNacimiento;
+    private Date fechaNacimiento;
 
     @Column(
             columnDefinition = "VARCHAR(12)",
@@ -82,14 +82,14 @@ public class Empleados {
             name = "F_ALTA",
             nullable = false
     )
-    private LocalDate fechaAlta;
+    private Date fechaAlta;
 
     @Column(
             columnDefinition = "DATE",
             name = "F_BAJA",
             nullable = true
     )
-    private LocalDate fechaBaja;
+    private Date fechaBaja;
 
     @Column(
             columnDefinition = "VARCHAR(1)",
@@ -108,7 +108,7 @@ public class Empleados {
     public Empleados() {
     }
 
-    public Empleados(String nif, String nombre, String apellido1, String apellido2, LocalDate fechaNacimiento, String ntelefono1, String ntelefono2, String email, LocalDate fechaAlta, String ecivil, String formacionU) {
+    public Empleados(String nif, String nombre, String apellido1, String apellido2, Date fechaNacimiento, String ntelefono1, String ntelefono2, String email, Date fechaAlta, String ecivil, String formacionU) {
 
         this.nif = nif;
         this.nombre = nombre;
@@ -164,11 +164,11 @@ public class Empleados {
         this.apellido2 = apellido2;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -196,19 +196,19 @@ public class Empleados {
         this.email = email;
     }
 
-    public LocalDate getFechaAlta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDate fechaAlta) {
+    public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
-    public LocalDate getFechaBaja() {
+    public Date getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(LocalDate fechaBaja) {
+    public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

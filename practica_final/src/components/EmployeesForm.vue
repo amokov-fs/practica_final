@@ -39,14 +39,14 @@
                 <v-col md="6">
                     <v-text-field
                     v-model = "fNacimiento"
-                    label="Fecha de nacimiento* (yyyy/mm/dd)"
+                    label="Fecha de nacimiento* (yyyy-mm-dd)"
                     required
                     ></v-text-field>
                 </v-col>
                 <v-col md="6">
                     <v-text-field
                     v-model = "fAlta"
-                    label="Fecha de Alta* (yyyy/mm/dd)"
+                    label="Fecha de Alta* (yyyy-mm-dd)"
                     required
                     ></v-text-field>
                 </v-col>

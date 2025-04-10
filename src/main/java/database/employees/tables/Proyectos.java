@@ -2,9 +2,10 @@ package database.employees.tables;
 
 
 import jakarta.persistence.*;
+
 import org.springframework.cglib.core.Local;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -34,19 +35,19 @@ public class Proyectos {
             nullable = false
 
     )
-    private LocalDate fechaInicio;
+    private Date fechaInicio;
     @Column(
             columnDefinition = "DATE",
             name = "F_FIN"
 
     )
-    private LocalDate fechaFin;
+    private Date fechaFin;
     @Column(
             columnDefinition = "DATE",
             name = "F_BAJA"
 
     )
-    private LocalDate fechaBaja;
+    private Date fechaBaja;
     @Column(
             columnDefinition = "VARCHAR(30)",
             name = "TX_LUGAR"
@@ -61,7 +62,7 @@ public class Proyectos {
     public Proyectos() {
     }
 
-    public Proyectos(String descripcion, LocalDate fechaInicio, LocalDate fechaFin, String lugar, String observaciones) {
+    public Proyectos(String descripcion, Date fechaInicio, Date fechaFin, String lugar, String observaciones) {
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -85,27 +86,27 @@ public class Proyectos {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public LocalDate getFechaBaja() {
+    public Date getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(LocalDate fechaBaja) {
+    public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

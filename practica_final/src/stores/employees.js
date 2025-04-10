@@ -47,6 +47,7 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
           draggable: true
         })
       } catch (error) {
+        console.log(error.response.data.error)
         this.dialog = false
         Swal.fire({
           title: error.response?.data?.error || 'Error al crear empleado',

@@ -44,11 +44,11 @@ public class Controller {
             @RequestParam(value = "nombreEmpleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[ ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El nombre solo puede tener letras") String nombreEmpleado,
             @RequestParam(value = "ap1Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido 1 solo puede tener letras y/o un guión intercalado") String ap1Empleado,
             @RequestParam(value = "ap2Empleado") @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido 2 solo puede tener letras y/o un guión intercalado") String ap2Empleado,
-            @RequestParam(value = "fNacEmpleado") @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de nacimiento incorrecta") String fNacEmpleado,
+            @RequestParam(value = "fNacEmpleado") @Pattern(regexp = "([0-9]{4})[-](0[1-9]|1[012])[-]([012][0-9]|3[0-1])", message = "Fecha de nacimiento incorrecta") String fNacEmpleado,
             @RequestParam(value = "tlf1Empleado") @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono 1 incorrecto") String tlf1Empleado,
             @RequestParam(value = "tlf2Empleado", required = false) @Pattern(regexp = "([679][0-9]{8})?", message = "Teléfono 2 incorrecto") String tlf2Empleado,
             @RequestParam(value = "emailEmpleado") @Pattern(regexp = "[a-z0-9]+[@][a-z]+[.][a-z]+", message = "Email incorrecto") String emailEmpleado,
-            @RequestParam(value = "fAltaEmpleado") @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de alta incorrecta") String fAltaEmpleado,
+            @RequestParam(value = "fAltaEmpleado") @Pattern(regexp = "([0-9]{4})[-](0[1-9]|1[012])[-]([012][0-9]|3[0-1])", message = "Fecha de alta incorrecta") String fAltaEmpleado,
             @RequestParam(value = "edoEmpleado") @Pattern(regexp = "[S|C]", message = "Estado civil incorrecto") String edoEmpleado,
             @RequestParam(value = "uniEmpleado") @Pattern(regexp = "[S|N]", message = "Formación universitaria incorrecta") String uniEmpleado) {
         return employeeService.createEmployee(nifEmpleado,
@@ -68,9 +68,9 @@ public class Controller {
     @RequestMapping("createProject")
     public ResponseEntity<Proyectos> createProject(@RequestParam(value = "desc") @Pattern(regexp = "[A-zÀ-ÿ0-9 -*+/]+", message = "La descripcion no puede estar vacia") String desc,
                                                     @RequestParam(value = "fInicio")
-                                                        @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])", message = "Fecha de inicio incorrecta") String fInicio,
+                                                        @Pattern(regexp = "([0-9]{4})[-](0[1-9]|1[012])[-]([012][0-9]|3[0-1])", message = "Fecha de inicio incorrecta") String fInicio,
                                                     @RequestParam(value = "fFin", required = false)
-                                                        @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])" , message = "Fecha de finalización incorrecta") String fFin,
+                                                        @Pattern(regexp = "([0-9]{4})[-](0[1-9]|1[012])[-]([012][0-9]|3[0-1])" , message = "Fecha de finalización incorrecta") String fFin,
                                                     @RequestParam(value = "lugar", required = false) String lugar,
                                                     @RequestParam(value = "obser", required = false) String obser) {
         return employeeService.createProject(desc,fInicio,fFin,lugar,obser);
@@ -80,7 +80,7 @@ public class Controller {
     @RequestMapping("assignEmployeeToProject")
     public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto,
                                                            @RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado,
-                                                           @RequestParam(value = "fAlta", required = false) @Pattern(regexp = "([0-9]{4})[/](0[1-9]|1[012])[/]([012][0-9]|3[0-1])") String fAlta) {
+                                                           @RequestParam(value = "fAlta", required = false) @Pattern(regexp = "([0-9]{4})[-](0[1-9]|1[012])[-]([012][0-9]|3[0-1])") String fAlta) {
         return employeeService.assignEmployeeToProject(idProyecto,idEmpleado,fAlta);
     }
 

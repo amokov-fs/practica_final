@@ -15,13 +15,13 @@ public class EmployeesExceptionHandler { // Devuelven un json con clave "error" 
     public ResponseEntity<Map<String, String>> handleAlreadyExists(AlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(Map.of("error", ex.getMessage()));
-    }
-
-    @ExceptionHandler(DoesNotExistException.class) // Manejo de la excepción no existe
-    public ResponseEntity<Map<String, String>> handleDoesNotExist(DoesNotExistException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("error", ex.getMessage()));
     }*/
+
+    @ExceptionHandler(ProjectHasEmployeesException.class) // Manejo de la excepción no existe
+    public ResponseEntity<Map<String, String>> handleDoesNotExist(ProjectHasEmployeesException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", ex.getMessage()));
+    }
 
     @ExceptionHandler(HandlerMethodValidationException.class) // Manejo de la excepción de las validaciones del create
     public ResponseEntity<Map<String, String>> handleValidationException(HandlerMethodValidationException ex) {
