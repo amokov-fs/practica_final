@@ -21,7 +21,6 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
         confirmButtonText: "Continuar",
         denyButtonText: `Cancelar`
       }).then(async (result) => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           try {
             const responseEmployee = await axios.delete('http://localhost:8080/deleteEmployee?idEmpleado=' + empleado.id)
@@ -67,7 +66,6 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
         confirmButtonText: "Continuar",
         denyButtonText: `Cancelar`
       }).then(async (result) => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           try {
             const response = await axios.post(request)

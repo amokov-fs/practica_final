@@ -21,10 +21,9 @@ export const useProjectsStore = () => {
             Swal.fire({
               title: "¿Quieres borrar el proyecto?",
               showDenyButton: true,
-              confirmButtonText: "Save",
-              denyButtonText: `Don't save`
+              confirmButtonText: "Continuar",
+              denyButtonText: `Cancelar`
             }).then(async (result) => {
-              /* Read more about isConfirmed, isDenied below */
               if (result.isConfirmed) {
                 try {
                   const responseProject = await axios.delete('http://localhost:8080/deleteProject?idProyecto=' + proyecto.id);
@@ -58,25 +57,38 @@ export const useProjectsStore = () => {
             if (proyecto.observaciones != "") {
                 request += "&obser=" + proyecto.observaciones
             }
-            
-            try {
-                const response = await axios.post(request)
-                await this.getActiveProjects();
-                this.dialog = false
-        
-                Swal.fire({
-                  title: 'Proyecto creado',
-                  icon: 'success',
-                  draggable: true
-                })
-              } catch (error) {
-                this.dialog = false
-                Swal.fire({
-                  title: error.response?.data?.error || 'Error al crear proyecto',
-                  icon: 'error',
-                  draggable: true
-                })
+            this.dialog = false
+            Swal.fire({
+              title: "¿Quieres crear el proyecto?",
+              showDenyButton: true,
+              confirmButtonText: "Continuar",
+              denyButtonText: `Cancelar`
+            }).then(async (result) => {
+              if (result.isConfirmed) {
+                try {
+                  const response = await axios.post(request)
+                  await this.getActiveProjects();
+                  
+          
+                  Swal.fire({
+                    title: 'Proyecto creado',
+                    icon: 'success',
+                    draggable: true
+                  })
+                } catch (error) {
+                  
+                  Swal.fire({
+                    title: error.response?.data?.error || 'Error al crear proyecto',
+                    icon: 'error',
+                    draggable: true
+                  })
+                }
+              } else if (result.isDenied) {
+                Swal.fire("No se ha creado el proyecto", "", "info");
               }
+            });
+            
+            
           },
           hideDialog () {
               this.dialog = false
