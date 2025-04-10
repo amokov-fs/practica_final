@@ -3,10 +3,10 @@
     <h1>Hola</h1>
     <v-select
         clearable
-        v-model = "selectedProject"
+        v-model = "employeesToProjectsStore.selectedProject"
         label="Selecciona Proyecto"
         :item-props="itemProps"
-        :items="projects"
+        :items="projectsStore.projects"
         item-title="descripcion"
         item-value="id"
         variant="outlined"
@@ -23,15 +23,15 @@
         </thead>
         <tbody>
         <tr
-            v-for="empleado in employees"
+            v-for="empleado in employeesStore.employees"
             :key="empleado.index"
             style="background-color:#f3f7fb;"
         >
             <td  style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nombre}} {{empleado.apellido1}} {{empleado.apellido2}}</td>
             <td  style="border-style: ridge; border-color:black;border-width:thin;">
                 <v-checkbox
-                    :model-value="estaAsignado(empleado)"
-                    @change="() => toggleAsignacion(empleado)"
+                    :model-value="employeesToProjectsStore.estaAsignado(empleado.id)"
+                    @change="() => employeesToProjectsStore.modificarAsignacion(empleado.id)"
                     hide-details
                     density="compact"
                 ></v-checkbox>
@@ -47,25 +47,19 @@
 
 import {ref, shallowRef, onMounted, reactive} from 'vue'
 import axios from "axios"
+import {useEmployeesToProjectsStore} from '../stores/employeesToProjects'
+import {useProjectsStore} from '../stores/projects'
+import {useEmployeesStore} from '../stores/employees'
 
-const projects = ref([])
-const employees = ref([])
-const selectedProject = ref(null)
+const projectsStore = useProjectsStore();
+const employeesToProjectsStore = useEmployeesToProjectsStore()
+const employeesStore = useEmployeesStore();
 
 
 onMounted(async () => {
-    
-    await axios
-    .get('http://localhost:8080/getProjects')
-    .then(response => {
-      projects.value = response.data
-    }),
-    await axios.get('http://localhost:8080/getEmployees')
-    .then(responseEmployees => {
-      employees.value = responseEmployees.data
-    }) 
-    
-      
+    await employeesStore.getActiveEmployees()
+    await employeesToProjectsStore.getAsignacionesProyecto(employeesToProjectsStore.selectedProject)
+          
 })
 
 function itemProps (project) { 
@@ -75,62 +69,8 @@ function itemProps (project) {
 }
 
 const onItemChange = () => {
-    employeesProject()
+    employeesToProjectsStore.getAsignacionesProyecto(employeesToProjectsStore.selectedProject)
 }
-
-async function employeesProject () {
-    const responseProjectEmployees = await axios.get('http://localhost:8080/getProjectEmployees?idProyecto=' + selectedProject.value);
-    
-    let employeesProject = []
-    for (const employee in responseProjectEmployees.data) {
-        employeesProject.push(responseProjectEmployees.data[employee].id)
-    }
-    asignaciones[selectedProject.value] = employeesProject
-    
-}
-
-
-// Asignaciones: { [proyectoId]: [emails de usuarios] }
-const asignaciones = reactive({})
-
-// Saber si un usuario está asignado al proyecto seleccionado
-const estaAsignado = (empleado) => {
-  const asignados = asignaciones[selectedProject.value] || [];
-  return asignados.includes(empleado.id);
-};
-
-// Agregar o quitar asignación
-const toggleAsignacion = (empleado) => {
-  const id = selectedProject.value;
-  if (!id) return;
-
-  // Si no existe, inicializa el array
-  if (!Array.isArray(asignaciones[id])) {
-    asignaciones[id] = [];
-  }
-
-  const index = asignaciones[id].indexOf(empleado.id);
-
-  if (index === -1) {
-    // Asignar
-    asignaciones[id].push(empleado.id);
-    guardarAsignacionEnBD(empleado.id)
-  } else {
-    // Desasignar
-    asignaciones[id].splice(index, 1);
-    eliminarAsignacionEnBD(empleado.id);
-  }
-};
-
-async function guardarAsignacionEnBD(idEmpleado) {
-  const responseProjectEmployees = await axios.post('http://localhost:8080/assignEmployeeToProject?idProyecto=' + selectedProject.value+'&idEmpleado='+idEmpleado);
-}
-
-async function eliminarAsignacionEnBD(idEmpleado) {
-  const responseProjectEmployees = await axios.delete('http://localhost:8080/deleteEmployeeFromProject?idProyecto=' + selectedProject.value+'&idEmpleado='+idEmpleado);
-}
-
-
 
 </script>
 
