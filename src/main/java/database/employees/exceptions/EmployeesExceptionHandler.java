@@ -11,14 +11,14 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class EmployeesExceptionHandler { // Devuelven un json con clave "error" y el mensaje correspondiente como valor
-    /*@ExceptionHandler(AlreadyExistsException.class) // Manejo de la excepción ya existe
-    public ResponseEntity<Map<String, String>> handleAlreadyExists(AlreadyExistsException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT)
+    @ExceptionHandler(EmployeeHasProjects.class)
+    public ResponseEntity<Map<String, String>> handleEmployeeHasProjects(EmployeeHasProjects ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", ex.getMessage()));
-    }*/
+    }
 
-    @ExceptionHandler(ProjectHasEmployeesException.class) // Manejo de la excepción no existe
-    public ResponseEntity<Map<String, String>> handleDoesNotExist(ProjectHasEmployeesException ex) {
+    @ExceptionHandler(ProjectHasEmployeesException.class)
+    public ResponseEntity<Map<String, String>> handleProjectHasEmployeesException(ProjectHasEmployeesException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", ex.getMessage()));
     }

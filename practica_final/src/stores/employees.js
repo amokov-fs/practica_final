@@ -15,9 +15,34 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
     },
 
     async deleteEmployee(empleado) {
-      const index = this.employees.indexOf(empleado)
-      this.employees.splice(index, 1)
-      await axios.delete('http://localhost:8080/deleteEmployee?idEmpleado=' + empleado.id)
+      Swal.fire({
+        title: "¿Quieres borrar el empleado?",
+        showDenyButton: true,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+      }).then(async (result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          try {
+            const responseEmployee = await axios.delete('http://localhost:8080/deleteEmployee?idEmpleado=' + empleado.id)
+            await this.getActiveEmployees();      
+            Swal.fire({
+              title: 'Empleado borrado',
+              icon: 'success',
+              draggable: true
+            })
+          } catch (error) {
+            this.dialog = false
+            Swal.fire({
+              title: error.response?.data?.error || 'Error al borrar empleado',
+              icon: 'error',
+              draggable: true
+            })
+          }
+        } else if (result.isDenied) {
+          Swal.fire("No se ha borrado el empleado", "", "info");
+        }
+      });
     },
 
     async saveNewEmployee(empleado) {

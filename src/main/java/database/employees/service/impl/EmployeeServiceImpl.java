@@ -126,8 +126,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 empleadosRepository.save(empleadoAEliminar);
                 return new ResponseEntity<>("Empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() + " eliminado", HttpStatus.OK);
             }
-            return new ResponseEntity<>("No se puede dar de baja al empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() +" porque está asignado a el/los proyecto/s " + proyectosEmpleado.toString(), HttpStatus.BAD_REQUEST);
-
+            throw new ProjectHasEmployeesException("No se puede dar de baja al empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() +" porque está asignado a el/los proyecto/s " + proyectosEmpleado);
         }
         return new ResponseEntity<>("El empleado no existe", HttpStatus.NO_CONTENT);
     }
