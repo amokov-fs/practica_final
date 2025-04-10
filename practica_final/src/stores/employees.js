@@ -18,8 +18,8 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
       Swal.fire({
         title: "¿Quieres borrar el empleado?",
         showDenyButton: true,
-        confirmButtonText: "Save",
-        denyButtonText: `Don't save`
+        confirmButtonText: "Continuar",
+        denyButtonText: `Cancelar`
       }).then(async (result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
@@ -60,26 +60,36 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
       request += "&fAltaEmpleado=" + empleado.fechaAlta
       request += "&edoEmpleado=" + empleado.ecivil
       request += "&uniEmpleado=" + empleado.formacionU
-
-      try {
-        const response = await axios.post(request)
-        await this.getActiveEmployees();
-        this.dialog = false
-
-        Swal.fire({
-          title: 'Usuario creado',
-          icon: 'success',
-          draggable: true
-        })
-      } catch (error) {
-        console.log(error.response.data.error)
-        this.dialog = false
-        Swal.fire({
-          title: error.response?.data?.error || 'Error al crear empleado',
-          icon: 'error',
-          draggable: true
-        })
-      }
+      this.dialog = false
+      Swal.fire({
+        title: "¿Quieres crear el empleado?",
+        showDenyButton: true,
+        confirmButtonText: "Continuar",
+        denyButtonText: `Cancelar`
+      }).then(async (result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          try {
+            const response = await axios.post(request)
+            await this.getActiveEmployees();    
+            Swal.fire({
+              title: 'Usuario creado',
+              icon: 'success',
+              draggable: true
+            })
+          } catch (error) {
+            console.log(error.response.data.error)
+            
+            Swal.fire({
+              title: error.response?.data?.error || 'Error al crear empleado',
+              icon: 'error',
+              draggable: true
+            })
+          }
+        } else if (result.isDenied) {
+          Swal.fire("No se ha creado el empleado", "", "info");
+        }
+      });
     },
 
     hideDialog() {
