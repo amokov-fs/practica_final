@@ -71,7 +71,7 @@ public class Empleados {
             name = "N_TELEFONO2"
     )
     private String ntelefono2;
-
+    @Pattern(regexp = "[a-z0-9.-]+[@][a-z]+[.][a-z]+", message = "Email incorrecto")
     @Column(
             columnDefinition = "VARCHAR(40)",
             name = "TX_EMAIL",

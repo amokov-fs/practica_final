@@ -25,7 +25,7 @@ public class Proyectos {
     )
     @Column(name = "ID_PROYECTO")
     private Integer id;
-    @Pattern(regexp = "[A-zÀ-ÿ0-9 -*+/]+", message = "La descripcion no puede estar vacia")
+    @Pattern(regexp = "[A-zÀ-ÿ0-9 -*+/.]+", message = "La descripcion no puede estar vacia")
     @Column(
             columnDefinition = "VARCHAR(125)",
             name = "TX_DESCRIPCIÓN",

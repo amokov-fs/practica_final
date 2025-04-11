@@ -126,6 +126,11 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
             const response = await axios.put(url, this.employeeToEdit)
             const index = this.employees.findIndex(e => e.id === this.employeeToEdit.id);
             this.employees[index] = this.employeeToEdit
+            Swal.fire({
+              title: 'Empleado editado',
+              icon: 'success',
+              draggable: true
+            }) 
           } catch (error) {            
             Swal.fire({
               title: error.response?.data?.error || 'Error al editar empleado/a',

@@ -21,7 +21,6 @@ export const useProjectsStore = () => {
           },
           async getProjectById(idProyecto) {
             const response = await axios.get('http://localhost:8080/getProjectById?idProyecto='+idProyecto)
-            console.log(response.data)
             return response.data
           },
           async deleteProject (proyecto) {
