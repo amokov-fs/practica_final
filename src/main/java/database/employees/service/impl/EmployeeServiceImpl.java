@@ -43,6 +43,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new ResponseEntity<>(empleado, HttpStatus.OK);
     }
 
+    public ResponseEntity<Proyectos> getProjectById(Integer idProyecto){
+        Proyectos proyecto = proyectosRepository.getProjectById(idProyecto);
+        return new ResponseEntity<>(proyecto, HttpStatus.OK);
+    }
+
     public ResponseEntity<List<Proyectos>> getProjects(){
 
         List<Proyectos> proyectos = proyectosRepository.getAll();
@@ -151,6 +156,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         empleado.setFormacionU(empleadoActualizado.getFormacionU());
         empleadosRepository.save(empleado);
         return new ResponseEntity<>("Empleado editado", HttpStatus.OK);
+    }
+
+    public ResponseEntity<String> updateProject(Proyectos proyectoActualizado) {
+        Proyectos proyecto = proyectosRepository.getProjectById(proyectoActualizado.getId());
+        proyecto.setDescripcion(proyectoActualizado.getDescripcion());
+        proyecto.setFechaInicio(proyectoActualizado.getFechaInicio());
+        proyecto.setFechaFin(proyectoActualizado.getFechaFin());
+        proyecto.setLugar(proyectoActualizado.getLugar());
+        proyecto.setObservaciones(proyectoActualizado.getObservaciones());
+        proyectosRepository.save(proyecto);
+        return new ResponseEntity<>("Proyecto editado", HttpStatus.OK);
     }
 
     public ResponseEntity<String> deleteProject(Integer idProyecto){

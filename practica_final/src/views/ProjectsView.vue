@@ -13,6 +13,7 @@
             <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:22%;">Fecha de finalización</th>
             <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:11%;">Lugar</th>
             <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:5%;"></th>
+            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:5%;"></th>
         </tr>
         </thead>
         <tbody>
@@ -31,9 +32,16 @@
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
             </td>
+            <td style="border-style: ridge; border-color:black;border-width:thin;">
+                <v-btn @click = "projectsStore.showEditDialog(proyecto.id)" icon style="width: 40px; height: 40px;">
+                  <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+            </td>
         </tr>
         </tbody>
     </v-table>
+
+    <EditProject v-model="projectsStore.editDialog" />
     
     <div >
         
@@ -47,6 +55,7 @@
 import {onMounted, ref, shallowRef} from "vue"
 import axios from "axios"
 import ProjectsForm from "../components/ProjectsForm.vue"
+import EditProject from "../components/EditProject.vue"
 import {useProjectsStore} from '../stores/projects'
 
 const projectsStore = useProjectsStore();

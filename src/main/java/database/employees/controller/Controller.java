@@ -33,6 +33,12 @@ public class Controller {
     }
 
     @GetMapping
+    @RequestMapping("getProjectById")
+    public ResponseEntity<Proyectos> getProjectById(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto) {
+        return employeeService.getProjectById(idProyecto);
+    }
+
+    @GetMapping
     @RequestMapping("getProjects")
     public ResponseEntity<List<Proyectos>> getProjects(){
         return employeeService.getProjects();
@@ -95,6 +101,12 @@ public class Controller {
     @RequestMapping("updateEmployee")
     public ResponseEntity<String> updateEmployee(@Valid @RequestBody Empleados empleado) {
         return employeeService.updateEmployee(empleado);
+    }
+
+    @PutMapping
+    @RequestMapping("updateProject")
+    public ResponseEntity<String> updateProject(@Valid @RequestBody Proyectos proyecto) {
+        return employeeService.updateProject(proyecto);
     }
 
     @DeleteMapping

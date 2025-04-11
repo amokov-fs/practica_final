@@ -3,6 +3,8 @@ package database.employees.tables;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.cglib.core.Local;
 
 import java.sql.Date;
@@ -23,12 +25,14 @@ public class Proyectos {
     )
     @Column(name = "ID_PROYECTO")
     private Integer id;
+    @Pattern(regexp = "[A-zÀ-ÿ0-9 -*+/]+", message = "La descripcion no puede estar vacia")
     @Column(
             columnDefinition = "VARCHAR(125)",
             name = "TX_DESCRIPCIÓN",
             nullable = false
     )
     private String descripcion;
+    @NotNull
     @Column(
             columnDefinition = "DATE",
             name = "F_INICIO",

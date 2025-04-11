@@ -122,26 +122,10 @@ export const useEmployeesStore = defineStore('EmployeesStore', {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
+            const url = "http://localhost:8080/updateEmployee"
+            const response = await axios.put(url, this.employeeToEdit)
             const index = this.employees.findIndex(e => e.id === this.employeeToEdit.id);
             this.employees[index] = this.employeeToEdit
-            console.log(this.employeeToEdit)
-            const url = "http://localhost:8080/updateEmployee"
-            axios.put(url, this.employeeToEdit)
-            .then(response => {
-              console.log('Respuesta del servidor:', response.data);
-            })
-            .catch(error => {
-              console.error('Error al hacer PUT:', error);
-            });
-            /*
-            const response = await axios.post(request)
-            await this.getActiveEmployees(); 
-            */   
-            Swal.fire({
-              title: 'Empleado/a editado/a',
-              icon: 'success',
-              draggable: true
-            })
           } catch (error) {            
             Swal.fire({
               title: error.response?.data?.error || 'Error al editar empleado/a',

@@ -118,21 +118,6 @@ import {useEmployeesStore} from '../stores/employees'
 
 const employeesStore = useEmployeesStore();
 
-const nif = ref("")
-const nombre = ref("")
-const ap1 = ref("")
-const ap2 = ref("")
-const fNacimiento = ref("")
-const fAlta = ref("")
-const tlf1 = ref("")
-const tlf2 = ref("")
-const email = ref("")
-const edoCivil = ref("")
-const formacionU = ref("")
-
-
-
-
 /*
 const props = defineProps({
   idEmployee: Number // a cada componente de edtar se le pasa el id

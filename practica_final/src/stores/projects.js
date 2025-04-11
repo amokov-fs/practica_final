@@ -7,6 +7,8 @@ export const useProjectsStore = () => {
     const ProjectsStore = defineStore('ProjectsStore', {
         state: () => ({ 
           dialog: false,
+          editDialog: false,
+          projectToEdit: {},
           projects: []
         }),
         actions: {
@@ -16,6 +18,11 @@ export const useProjectsStore = () => {
                   .then(response => {
                   this.projects = response.data
               })
+          },
+          async getProjectById(idProyecto) {
+            const response = await axios.get('http://localhost:8080/getProjectById?idProyecto='+idProyecto)
+            console.log(response.data)
+            return response.data
           },
           async deleteProject (proyecto) {
             Swal.fire({
@@ -95,6 +102,44 @@ export const useProjectsStore = () => {
           },
           showDialog () {
               this.dialog = true
+          },
+          hideEditDialog() {
+            this.editDialog = false
+          },
+          async showEditDialog(idProyecto) {
+            this.editDialog = true
+            let proyecto = await this.getProjectById(idProyecto);
+            this.projectToEdit = proyecto
+          }, 
+          async editProject() {
+            this.editDialog = false
+            Swal.fire({
+              title: "¿Quieres editar el proyecto?",
+              showDenyButton: true,
+              confirmButtonText: "Continuar",
+              denyButtonText: `Cancelar`
+            }).then(async (result) => {
+              if (result.isConfirmed) {
+                try {
+                  const url = "http://localhost:8080/updateProject"
+                  const response = await axios.put(url, this.projectToEdit)  
+                  await this.getActiveProjects();
+                  Swal.fire({
+                    title: 'Proyecto editado',
+                    icon: 'success',
+                    draggable: true
+                  })               
+                } catch (error) {            
+                  Swal.fire({
+                    title: error.response?.data?.error || 'Error al editar proyecto',
+                    icon: 'error',
+                    draggable: true
+                  })
+                }
+              } else if (result.isDenied) {
+                Swal.fire("No se ha editado el proyecto", "", "info");
+              }
+            });
           }
         }
         
