@@ -8,12 +8,13 @@
     <v-table style="border-style: ridge; width:100%;">
         <thead>
         <tr style="background-color:#026fc1;">
-            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:40%;">Descripción</th>
-            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:22%;">Fecha de inicio</th>
-            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:22%;">Fecha de finalización</th>
-            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:11%;">Lugar</th>
-            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:5%;"></th>
-            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:5%;"></th>
+            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:6%;">ID</th>
+            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:30%;">Descripción</th>
+            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:18%;">Fecha de inicio</th>
+            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:18%;">Fecha de finalización</th>
+            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:10%;">Lugar</th>
+            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:3%;"></th>
+            <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:3%;"></th>
         </tr>
         </thead>
         <tbody>
@@ -23,17 +24,18 @@
             style="background-color:#f3f7fb;"
             
         >
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{proyecto.id}} &nbsp; </td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{proyecto.descripcion}} &nbsp; </td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{proyecto.fechaInicio}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{proyecto.fechaFin}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{proyecto.lugar}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
-                <v-btn icon color="error" @click="projectsStore.deleteProject(proyecto)" style="width: 40px; height: 40px;">
+                <v-btn icon color="error" @click="projectsStore.deleteProject(proyecto)" style="width: 30px; height: 30px;">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
             </td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
-                <v-btn @click = "projectsStore.showEditDialog(proyecto.id)" icon style="width: 40px; height: 40px;">
+                <v-btn @click = "projectsStore.showEditDialog(proyecto.id)" icon style="width: 30px; height: 30px;">
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
             </td>

@@ -18,7 +18,7 @@
         <thead>
         <tr style="background-color:#026fc1;color:white;">
             <th style="border-style: ridge; border-color:black;border-width:thin;">Nombre completo</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;"></th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;">Asignado</th>
         </tr>
         </thead>
         <tbody>

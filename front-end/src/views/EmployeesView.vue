@@ -9,17 +9,18 @@
     <v-table style="border-style: ridge;">
         <thead>
         <tr style="background-color:#026fc1;color:white;">
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:6%;">ID</th>
             <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">NIF</th>
             <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">Nombre</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">1º Apellido</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">2º Apellido</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">Fecha de nacimiento</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:12%;">1º Apellido</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:12%;">2º Apellido</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin; width:12%;">Fecha de nacimiento</th>
             <th style="border-style: ridge; border-color:black;border-width:thin; width:10%;">1º Telefono</th>
             <th style="border-style: ridge; border-color:black;border-width:thin; width:15%;">Email</th>
             <th style="border-style: ridge; border-color:black;border-width:thin;width:10%;">Estado Civil</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;width:11%;">Formación universitaria</th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;width:4%;"></th>
-            <th style="border-style: ridge; border-color:black;border-width:thin;width:4%;"></th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;width:11%;">Univ.</th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;width:3%;"></th>
+            <th style="border-style: ridge; border-color:black;border-width:thin;width:3%;"></th>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@
             style="background-color:#f3f7fb;"
             
         >
+            <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.id}} &nbsp; </td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nif}} &nbsp; </td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.nombre}} &nbsp;</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">{{empleado.apellido1}} &nbsp;</td>
@@ -41,12 +43,12 @@
             <td v-if="empleado.formacionU == 'S'" style="border-style: ridge; border-color:black;border-width:thin;">Si</td>
             <td v-if="empleado.formacionU == 'N'" style="border-style: ridge; border-color:black;border-width:thin;">No</td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
-                <v-btn icon color="error" @click="employeesStore.deleteEmployee(empleado)" style="width: 40px; height: 40px;">
+                <v-btn icon color="error" @click="employeesStore.deleteEmployee(empleado)" style="width: 30px; height: 30px;">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
             </td>
             <td style="border-style: ridge; border-color:black;border-width:thin;">
-                <v-btn @click = "employeesStore.showEditDialog(empleado.id)" icon style="width: 40px; height: 40px;">
+                <v-btn @click = "employeesStore.showEditDialog(empleado.id)" icon style="width: 30px; height: 30px;">
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
             </td>
