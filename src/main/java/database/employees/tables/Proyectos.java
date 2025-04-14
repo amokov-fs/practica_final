@@ -3,6 +3,7 @@ package database.employees.tables;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.cglib.core.Local;
@@ -14,7 +15,6 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @Entity(name = "pr_proyectos")
 public class Proyectos {
 
-    final String regexDescripcion = "[A-zÀ-ÿ0-9 -*+/]+";
     final String msgDescripcion = "La descripcion no puede estar vacia";
 
 
@@ -30,7 +30,7 @@ public class Proyectos {
     )
     @Column(name = "ID_PROYECTO")
     private Integer id;
-    @Pattern(regexp = regexDescripcion, message = msgDescripcion)
+    @NotBlank(message = msgDescripcion)
     @Column(
             columnDefinition = "VARCHAR(125)",
             name = "TX_DESCRIPCIÓN",

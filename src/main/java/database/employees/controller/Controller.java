@@ -5,6 +5,7 @@ import database.employees.tables.Empleados;
 import database.employees.tables.EmpleadoAProyecto;
 import database.employees.tables.Proyectos;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ public class Controller {
     final String regexEmail = "[a-z0-9.-]+[@][a-z]+[.][a-z]+";
     final String regexEdoCivil = "[S|C]";
     final String regexFormacionU = "[S|N]";
-    final String regexDescripcion = "[A-zÀ-ÿ0-9 -*+/]+";
     final String msgNif = "El NIF debe tener 8 números y una letra";
     final String msgNombre = "El nombre solo puede tener letras";
     final String msgApellido1 = "El apellido 1 solo puede tener letras y/o un guión intercalado";
@@ -109,7 +109,7 @@ public class Controller {
     @RequestMapping("createProject")
     public ResponseEntity<Proyectos> createProject(
             @RequestParam(value = "desc")
-                @Pattern(regexp = regexDescripcion, message = msgDescripcion) String desc,
+                @NotBlank(message = msgDescripcion) String desc,
             @RequestParam(value = "fInicio")
                 @Pattern(regexp = regexFecha, message = msgFechaInicio) String fInicio,
             @RequestParam(value = "fFin", required = false)
