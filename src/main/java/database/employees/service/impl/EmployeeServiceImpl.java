@@ -23,6 +23,17 @@ import java.util.Objects;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    final String msgEmployeeInProject1 = "No se puede dar de baja al empleado ";
+    final String msgEmployeeInProject2 = " porque está asignado a el/los proyecto/s ";
+    final String msgProjectToEmployee1 = "No se puede dar de baja el proyecto ";
+    final String msgProjectToEmployee2 = " porque está asignado a el/los empleado/s ";
+    final String msgEmployeeNotExist = "El empleado no existe";
+    final String msgEmployeeEdited = "Empleado editado";
+    final String msgProjectNotExist = "El proyecto no existe";
+    final String msgProjectEdited = "Proyecto editado";
+    final String msgRemovedFromProject = " eliminado del proyecto ";
+    final String msgAssignNotExist = "La relacion no existe";
+
     @Autowired
     EmpleadosRepository empleadosRepository;
 
@@ -130,15 +141,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ResponseEntity<String> deleteEmployee(Integer idEmpleado){
         Empleados empleadoAEliminar = empleadosRepository.getEmployeeById(idEmpleado);
         if (empleadoAEliminar != null) {
+            String nombreCompleto = empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1();
             List<Integer> proyectosEmpleado = empleadoAProyectoRepository.getProjectsIdEmployee(idEmpleado);
             if (proyectosEmpleado.isEmpty()){
                 empleadoAEliminar.setFechaBaja(new Date(System.currentTimeMillis()));
                 empleadosRepository.save(empleadoAEliminar);
-                return new ResponseEntity<>("Empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() + " eliminado", HttpStatus.OK);
+                return new ResponseEntity<>("Empleado " + nombreCompleto + " eliminado", HttpStatus.OK);
             }
-            throw new ProjectHasEmployeesException("No se puede dar de baja al empleado " + empleadoAEliminar.getNombre() + " " + empleadoAEliminar.getApellido1() +" porque está asignado a el/los proyecto/s " + proyectosEmpleado);
+
+            String msgException = msgEmployeeInProject1+ nombreCompleto +msgEmployeeInProject2 + proyectosEmpleado;
+            throw new ProjectHasEmployeesException(msgException);
         }
-        return new ResponseEntity<>("El empleado no existe", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(msgEmployeeNotExist, HttpStatus.NO_CONTENT);
     }
 
     public ResponseEntity<String> updateEmployee(Empleados empleadoActualizado) {
@@ -155,7 +169,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         empleado.setEcivil(empleadoActualizado.getEcivil());
         empleado.setFormacionU(empleadoActualizado.getFormacionU());
         empleadosRepository.save(empleado);
-        return new ResponseEntity<>("Empleado editado", HttpStatus.OK);
+        return new ResponseEntity<>(msgEmployeeEdited, HttpStatus.OK);
     }
 
     public ResponseEntity<String> updateProject(Proyectos proyectoActualizado) {
@@ -166,7 +180,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         proyecto.setLugar(proyectoActualizado.getLugar());
         proyecto.setObservaciones(proyectoActualizado.getObservaciones());
         proyectosRepository.save(proyecto);
-        return new ResponseEntity<>("Proyecto editado", HttpStatus.OK);
+        return new ResponseEntity<>(msgProjectEdited, HttpStatus.OK);
     }
 
     public ResponseEntity<String> deleteProject(Integer idProyecto){
@@ -179,10 +193,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 proyectosRepository.save(proyectoAEliminar);
                 return new ResponseEntity<>("Proyecto " + proyectoAEliminar.getDescripcion() + " eliminado", HttpStatus.OK);
             }
-            throw new ProjectHasEmployeesException("No se puede dar de baja al proyecto " + proyectoAEliminar.getDescripcion() +" porque está asignado a el/los empleado/s " + empleadosProyecto);
+            throw new ProjectHasEmployeesException(msgProjectToEmployee1 + proyectoAEliminar.getDescripcion() + msgProjectToEmployee2 + empleadosProyecto);
 
         }
-        return new ResponseEntity<>("El proyecto no existe", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(msgProjectNotExist, HttpStatus.NO_CONTENT);
     }
 
     public ResponseEntity<String> deleteEmployeeFromProject(Integer idProyecto,Integer idEmpleado){
@@ -193,8 +207,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         if (empleado.getFechaBaja() == null && proyecto.getFechaBaja() == null) {
             empleadoAProyectoRepository.delete(asignacionAEliminar);
-            return new ResponseEntity<>("Empleado " + idEmpleado + " eliminado del proyecto " + idProyecto,HttpStatus.OK);
+            return new ResponseEntity<>("Empleado " + idEmpleado + msgRemovedFromProject + idProyecto,HttpStatus.OK);
         }
-        return new ResponseEntity<>("La relacion no existe" , HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(msgAssignNotExist , HttpStatus.BAD_REQUEST);
     }
 }

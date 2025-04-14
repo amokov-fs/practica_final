@@ -11,8 +11,8 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class EmployeesExceptionHandler { // Devuelven un json con clave "error" y el mensaje correspondiente como valor
-    @ExceptionHandler(EmployeeHasProjects.class)
-    public ResponseEntity<Map<String, String>> handleEmployeeHasProjects(EmployeeHasProjects ex) {
+    @ExceptionHandler(EmployeeHasProjectsException.class)
+    public ResponseEntity<Map<String, String>> handleEmployeeHasProjects(EmployeeHasProjectsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", ex.getMessage()));
     }

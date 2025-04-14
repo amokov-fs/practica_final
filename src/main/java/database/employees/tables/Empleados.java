@@ -10,6 +10,26 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 
 @Entity(name = "em_empleados")
 public class Empleados {
+    final String regexNif = "[0-9]{8}[A-z]";
+    final String regexNombre = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[ ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*";
+    final String regexApellido = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*";
+    final String regexTlf1 = "[679][0-9]{8}";
+    final String regexTlf2 = "([679][0-9]{8})?";
+    final String regexEmail = "[a-z0-9.-]+[@][a-z]+[.][a-z]+";
+    final String regexEdoCivil = "[S|C]";
+    final String regexFormacionU = "[S|N]";
+    final String msgNif = "El NIF debe tener 8 números y una letra";
+    final String msgNombre = "El nombre solo puede tener letras";
+    final String msgApellido1 = "El apellido 1 solo puede tener letras y/o un guión intercalado";
+    final String msgApellido2 = "El apellido 2 solo puede tener letras y/o un guión intercalado";
+    final String msgFechaNac = "Fecha de nacimiento incorrecta";
+    final String msgFechaAlta = "Fecha de alta incorrecta";
+    final String msgTlf1 = "Teléfono 1 incorrecto";
+    final String msgTlf2 = "Teléfono 2 incorrecto";
+    final String msgEmail = "Email incorrecto";
+    final String msgEdoCivil = "Estado civil incorrecto";
+    final String msgFormacionU = "Formación unversitaria incorrecta";
+
     @Id
     @SequenceGenerator(
             name = "ID_EMPLEADO",
@@ -22,14 +42,14 @@ public class Empleados {
     )
     @Column (name = "ID_EMPLEADO")
     private Integer id;
-    @Pattern(regexp = "[0-9]{8}[A-z]", message = "El NIF debe tener 8 números y una letra")
+    @Pattern(regexp = regexNif, message = msgNif)
     @Column(
             columnDefinition = "VARCHAR(9)",
             name = "TX_NIF",
             unique = true
     )
     private String nif;
-    @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[ ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El nombre solo puede tener letras")
+    @Pattern(regexp = regexNombre, message = msgNombre)
     @Column(
             columnDefinition = "VARCHAR(30)",
             name = "TX_NOMBRE",
@@ -37,48 +57,48 @@ public class Empleados {
 
     )
     private String nombre;
-    @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido 1 solo puede tener letras y/o un guión intercalado")
+    @Pattern(regexp = regexApellido, message = msgApellido1)
     @Column(
             columnDefinition = "VARCHAR(40)",
             name = "TX_APELLIDO1",
             nullable = false
     )
     private String apellido1;
-    @Pattern(regexp = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*", message = "El apellido 2 solo puede tener letras y/o un guión intercalado")
+    @Pattern(regexp = regexApellido, message = msgApellido2)
     @Column(
             columnDefinition = "VARCHAR(40)",
             name = "TX_APELLIDO2",
             nullable = false
     )
     private String apellido2;
-    @NotNull
+    @NotNull(message = msgFechaNac)
     @Column(
             columnDefinition = "DATE",
             name = "F_NACIMIENTO",
             nullable = false
     )
     private Date fechaNacimiento;
-    @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono 1 incorrecto")
+    @Pattern(regexp = regexTlf1, message = msgTlf1)
     @Column(
             columnDefinition = "VARCHAR(12)",
             name = "N_TELEFONO1",
             nullable = false
     )
     private String ntelefono1;
-    @Pattern(regexp = "[679][0-9]{8}", message = "Teléfono 2 incorrecto")
+    @Pattern(regexp = regexTlf2, message = msgTlf2)
     @Column(
             columnDefinition = "VARCHAR(12)",
             name = "N_TELEFONO2"
     )
     private String ntelefono2;
-    @Pattern(regexp = "[a-z0-9.-]+[@][a-z]+[.][a-z]+", message = "Email incorrecto")
+    @Pattern(regexp = regexEmail, message = msgEmail)
     @Column(
             columnDefinition = "VARCHAR(40)",
             name = "TX_EMAIL",
             nullable = false
     )
     private String email;
-    @NotNull
+    @NotNull(message = msgFechaAlta)
     @Column(
             columnDefinition = "DATE",
             name = "F_ALTA",
@@ -92,14 +112,14 @@ public class Empleados {
             nullable = true
     )
     private Date fechaBaja;
-    @Pattern(regexp = "[S|C]", message = "Estado civil incorrecto")
+    @Pattern(regexp = regexEdoCivil, message = msgEdoCivil)
     @Column(
             columnDefinition = "VARCHAR(1)",
             name = "CX_EDOCIVIL",
             nullable = false
     )
     private String ecivil;
-    @Pattern(regexp = "[S|N]", message = "Formación universitaria incorrecta")
+    @Pattern(regexp = regexFormacionU, message = msgFormacionU)
     @Column(
             columnDefinition = "VARCHAR(1)",
             name = "B_FORMACIONU",

@@ -79,14 +79,14 @@
                 <v-col md="6">
                     <v-text-field
                     v-model = "employeesStore.employeeToEdit.ecivil"
-                    label="Estado Civil*"
+                    label="Estado Civil* (S - Soltero/a; C- Casado/a)"
                     required
                     ></v-text-field>
                 </v-col>
                 <v-col md="6">
                     <v-text-field
                     v-model = "employeesStore.employeeToEdit.formacionU"
-                    label="Formacion Universitaria*"
+                    label="Formacion Universitaria* (S-Si; N-No)"
                     required
                     ></v-text-field>
                 </v-col>
