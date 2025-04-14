@@ -27,9 +27,21 @@ export const useEmployeesToProjectsStore = defineStore('EmployeesToProjectsStore
                 }
                 const index = this.asignaciones[this.selectedProject].indexOf(idEmpleado);
 
+                const responseEmpleado = await axios.get('http://localhost:8080/getEmployeeById?idEmpleado='+idEmpleado);
+
+                const empleado = responseEmpleado.data
+
+                const nombreCompletoEmpleado = empleado.nombre + " " + empleado.apellido1 + " " + empleado.apellido2
+
+                const response = await axios.get('http://localhost:8080/getProjectById?idProyecto='+this.selectedProject)
+                
+                const proyecto = response.data
+
+                const descripcionProyecto = proyecto.descripcion
+
                 if (index === -1) {
                     Swal.fire({
-                        title: "¿Quieres asignar el empleado " + idEmpleado + " al proyecto " + this.selectedProject,
+                        title: "¿Quieres asignar el empleado " + nombreCompletoEmpleado + " al proyecto " + descripcionProyecto,
                         showDenyButton: true,
                         confirmButtonText: "Continuar",
                         denyButtonText: `Cancelar`
@@ -39,26 +51,26 @@ export const useEmployeesToProjectsStore = defineStore('EmployeesToProjectsStore
                             const responseProjectEmployees = await axios.post('http://localhost:8080/assignEmployeeToProject?idProyecto=' + this.selectedProject+'&idEmpleado='+idEmpleado);
                             await this.getAsignacionesProyecto();      
                             Swal.fire({
-                              title: 'Empleado '+ idEmpleado + " asignado al proyecto " + this.selectedProject,
+                              title: 'Empleado '+ nombreCompletoEmpleado + " asignado al proyecto " + descripcionProyecto,
                               icon: 'success',
                               draggable: true
                             })
                           } catch (error) {
                             this.dialog = false
                             Swal.fire({
-                              title: error.response?.data?.error || 'Error al asignar el empleado ' + idEmpleado + " al proyecto " + this.selectedProject,
+                              title: error.response?.data?.error || 'Error al asignar el empleado ' + nombreCompletoEmpleado + " al proyecto " + descripcionProyecto,
                               icon: 'error',
                               draggable: true
                             })
                           }
                         } else if (result.isDenied) {
-                          Swal.fire("No se ha asignado el empleado " + idEmpleado + " al proyecto " + this.selectedProject, "", "info");
+                          Swal.fire("No se ha asignado el empleado " + nombreCompletoEmpleado + " al proyecto " + descripcionProyecto, "", "info");
                         }
                       });
                     
                 } else {
                     Swal.fire({
-                        title: "¿Quieres borrar el empleado " + idEmpleado + " del proyecto " + this.selectedProject,
+                        title: "¿Quieres borrar el empleado " + nombreCompletoEmpleado + " del proyecto " + descripcionProyecto,
                         showDenyButton: true,
                         confirmButtonText: "Continuar",
                         denyButtonText: `Cancelar`
@@ -68,20 +80,20 @@ export const useEmployeesToProjectsStore = defineStore('EmployeesToProjectsStore
                             const responseProjectEmployees = await axios.delete('http://localhost:8080/deleteEmployeeFromProject?idProyecto=' + this.selectedProject+'&idEmpleado='+idEmpleado);
                             await this.getAsignacionesProyecto();      
                             Swal.fire({
-                              title: 'Empleado '+ idEmpleado + " borrado del proyecto " + this.selectedProject,
+                              title: 'Empleado '+ nombreCompletoEmpleado + " borrado del proyecto " + descripcionProyecto,
                               icon: 'success',
                               draggable: true
                             })
                           } catch (error) {
                             this.dialog = false
                             Swal.fire({
-                              title: error.response?.data?.error || 'Error al borrar el empleado ' + idEmpleado + " del proyecto " + this.selectedProject,
+                              title: error.response?.data?.error || 'Error al borrar el empleado ' + nombreCompletoEmpleado + " del proyecto " + descripcionProyecto,
                               icon: 'error',
                               draggable: true
                             })
                           }
                         } else if (result.isDenied) {
-                          Swal.fire("No se ha borrado el empleado " + idEmpleado + " del proyecto " + this.selectedProject, "", "info");
+                          Swal.fire("No se ha borrado el empleado " + nombreCompletoEmpleado + " del proyecto " + descripcionProyecto, "", "info");
                         }
                       });
                     
