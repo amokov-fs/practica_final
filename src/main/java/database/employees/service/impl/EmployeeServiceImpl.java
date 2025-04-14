@@ -35,6 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     final String msgRemovedFromProject = " eliminado del proyecto ";
     final String msgAssignNotExist = "La relacion no existe";
     final String msgStartDateAfterEndDate = "La fecha de inicio es posterior a la fecha final";
+    final String msgBirthDateAfterCreateDate = "La fecha de nacimiento es posterior a la fecha de alta";
 
     @Autowired
     EmpleadosRepository empleadosRepository;
@@ -85,6 +86,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                                                     String uniEmpleado){
         Date fechaNacimiento = Date.valueOf(fNacEmpleado);
         Date fechaAlta = Date.valueOf(fAltaEmpleado);
+
+        if (fechaNacimiento.after(fechaAlta)) {
+            throw new StartDateAfterEndDateException(msgBirthDateAfterCreateDate);
+        }
 
         Empleados empleado = new Empleados(nifEmpleado,
                                             nombreEmpleado,
@@ -163,6 +168,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public ResponseEntity<String> updateEmployee(Empleados empleadoActualizado) {
+        if (empleadoActualizado.getFechaNacimiento().after(empleadoActualizado.getFechaAlta())) {
+            throw new StartDateAfterEndDateException(msgBirthDateAfterCreateDate);
+        }
         Empleados empleado = empleadosRepository.getEmployeeById(empleadoActualizado.getId());
         empleado.setNombre(empleadoActualizado.getNombre());
         empleado.setNif(empleadoActualizado.getNif());
