@@ -23,6 +23,12 @@ public class EmployeesExceptionHandler { // Devuelven un json con clave "error" 
                 .body(Map.of("error", ex.getMessage()));
     }
 
+    @ExceptionHandler(StartDateAfterEndDateException.class)
+    public ResponseEntity<Map<String, String>> handleStartDateAfterEndDateException(StartDateAfterEndDateException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("error", ex.getMessage()));
+    }
+
     @ExceptionHandler(HandlerMethodValidationException.class) // Manejo de la excepción de las validaciones del create
     public ResponseEntity<Map<String, String>> handleValidationException(HandlerMethodValidationException ex) {
 

@@ -1,6 +1,7 @@
 package database.employees.service.impl;
 
 import database.employees.exceptions.ProjectHasEmployeesException;
+import database.employees.exceptions.StartDateAfterEndDateException;
 import database.employees.repositories.EmpleadoAProyectoRepository;
 import database.employees.repositories.EmpleadosRepository;
 import database.employees.repositories.ProyectosRepository;
@@ -33,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     final String msgProjectEdited = "Proyecto editado";
     final String msgRemovedFromProject = " eliminado del proyecto ";
     final String msgAssignNotExist = "La relacion no existe";
+    final String msgStartDateAfterEndDate = "La fecha de inicio es posterior a la fecha final";
 
     @Autowired
     EmpleadosRepository empleadosRepository;
@@ -113,6 +115,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
         Proyectos proyecto = new Proyectos(desc,fechaInicio,fechaFin,lugar,obser);
+
+        if (fechaFin != null && fechaInicio.after(fechaFin)) {
+            throw new StartDateAfterEndDateException(msgStartDateAfterEndDate);
+        }
+
         proyectosRepository.save(proyecto);
         return new ResponseEntity<>(proyecto, HttpStatus.CREATED);
     }
@@ -173,6 +180,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public ResponseEntity<String> updateProject(Proyectos proyectoActualizado) {
+        if (proyectoActualizado.getFechaFin() != null && proyectoActualizado.getFechaInicio().after(proyectoActualizado.getFechaFin())) {
+            throw new StartDateAfterEndDateException(msgStartDateAfterEndDate);
+        }
         Proyectos proyecto = proyectosRepository.getProjectById(proyectoActualizado.getId());
         proyecto.setDescripcion(proyectoActualizado.getDescripcion());
         proyecto.setFechaInicio(proyectoActualizado.getFechaInicio());
