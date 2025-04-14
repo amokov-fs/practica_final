@@ -113,15 +113,10 @@
 
 <script setup>
 
-import {ref, onMounted} from 'vue'
 import {useEmployeesStore} from '../stores/employees'
 
 const employeesStore = useEmployeesStore();
 
-/*
-const props = defineProps({
-  idEmployee: Number // a cada componente de edtar se le pasa el id
-})*/
 
 </script>
 

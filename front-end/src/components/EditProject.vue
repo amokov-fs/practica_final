@@ -83,7 +83,6 @@
 
 
 <script setup>
-import {ref} from 'vue'
 import {useProjectsStore} from '../stores/projects'
 
 const projectsStore = useProjectsStore();

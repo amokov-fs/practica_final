@@ -125,7 +125,7 @@
 
 <script setup>
 
-import {ref, onMounted} from 'vue'
+import {ref} from 'vue'
 import {useEmployeesStore} from '../stores/employees'
 
 const nif = ref("")

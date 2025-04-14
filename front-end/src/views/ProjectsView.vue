@@ -51,9 +51,6 @@
 </template>
 
 <script setup>
-
-import {onMounted, ref, shallowRef} from "vue"
-import axios from "axios"
 import ProjectsForm from "../components/ProjectsForm.vue"
 import EditProject from "../components/EditProject.vue"
 import {useProjectsStore} from '../stores/projects'

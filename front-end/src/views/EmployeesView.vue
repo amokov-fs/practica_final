@@ -65,8 +65,7 @@
 
 <script setup>
 
-import {onMounted, ref} from "vue"
-import axios from "axios"
+import {onMounted} from "vue"
 import {useEmployeesStore} from '../stores/employees'
 import EmployeesForm from '../components/EmployeesForm.vue'
 import EditEmployee from '../components/EditEmployee.vue'

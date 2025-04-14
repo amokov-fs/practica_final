@@ -45,7 +45,7 @@
 
 <script setup>
 
-import {ref, shallowRef, onMounted, reactive} from 'vue'
+import {onMounted} from 'vue'
 import axios from "axios"
 import {useEmployeesToProjectsStore} from '../stores/employeesToProjects'
 import {useProjectsStore} from '../stores/projects'
