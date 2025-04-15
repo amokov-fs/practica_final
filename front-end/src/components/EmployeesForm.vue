@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="employeesStore.dialog" max-width="700px">
     <v-card>
-        <v-card-text>
+        <v-card-text> <!-- muestra el formulario si dialog de la store de empleados es true --> 
             <v-row dense>
                 <v-col md="6">
                     <v-text-field
@@ -9,14 +9,14 @@
                     label="NIF*"
                     required
                     ></v-text-field>
-                </v-col>
+                </v-col> <!-- Input NIF --> 
                 
                 <v-col md="6">
                     <v-text-field
                     v-model = "nombre"
                     label="Nombre*"
                     required
-                    ></v-text-field>
+                    ></v-text-field> <!-- Input nombre --> 
                 </v-col>
             </v-row>
             <v-row dense>
@@ -25,14 +25,14 @@
                     v-model = "ap1"
                     label="Apellido 1*"
                     required
-                    ></v-text-field>
+                    ></v-text-field> <!-- Input apellido1 --> 
                 </v-col>
                 <v-col md="6">
                     <v-text-field
                     v-model = "ap2"
                     label="Apellido 2*"
                     required
-                    ></v-text-field>
+                    ></v-text-field><!-- Input apellido2 --> 
                 </v-col>
             </v-row>
             <v-row dense>
@@ -41,14 +41,14 @@
                     v-model = "fNacimiento"
                     label="Fecha de nacimiento* (yyyy-mm-dd)"
                     required
-                    ></v-text-field>
+                    ></v-text-field> <!-- Input fecha nacimiento --> 
                 </v-col>
                 <v-col md="6">
                     <v-text-field
                     v-model = "fAlta"
                     label="Fecha de Alta* (yyyy-mm-dd)"
                     required
-                    ></v-text-field>
+                    ></v-text-field> <!-- Input fecha alta --> 
                 </v-col>
             </v-row>
             <v-row dense>
@@ -57,13 +57,13 @@
                     v-model = "tlf1"
                     label="Telefono 1*"
                     required
-                    ></v-text-field>
+                    ></v-text-field> <!-- Input telefono 1 --> 
                 </v-col>
                 <v-col md="6">
                     <v-text-field
                     v-model = "tlf2"
                     label="Telefono 2"
-                    ></v-text-field>
+                    ></v-text-field> <!-- Input telefono2 --> 
                 </v-col>
             </v-row>
             <v-row dense>
@@ -73,7 +73,7 @@
                     label="Email*"
                     required
                     ></v-text-field>
-                </v-col>
+                </v-col> <!-- Input email --> 
             </v-row>
             <v-row dense>
                 <v-col md="6">
@@ -81,14 +81,14 @@
                     v-model = "edoCivil"
                     label="Estado Civil* (S - Soltero/a; C- Casado/a)"
                     required
-                    ></v-text-field>
+                    ></v-text-field> <!-- Input estado civil --> 
                 </v-col>
                 <v-col md="6">
                     <v-text-field
                     v-model = "formacionU"
                     label="Formacion Universitaria* (S-Si; N-No)"
                     required
-                    ></v-text-field>
+                    ></v-text-field> <!-- Input formacion universitaria --> 
                 </v-col>
             </v-row>
 
@@ -96,9 +96,9 @@
             </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
-
+            <!-- Boton de cancelar, cierra el formulario de alta sin guardar --> 
             <v-btn text="Cancelar" variant="plain" @click.stop="employeesStore.hideDialog()"></v-btn>
-
+            <!-- boton de guardar el empleado, se le pasa un diccionario con el empleado nuevo --> 
             <v-btn
                 color="primary"
                 text="Guardar"
@@ -125,8 +125,12 @@
 
 <script setup>
 
+//Importar store de empleados
+
 import {ref} from 'vue'
 import {useEmployeesStore} from '../stores/employees'
+
+// Variables que actualizan los inputs
 
 const nif = ref("")
 const nombre = ref("")

@@ -10,10 +10,10 @@ import java.util.List;
 
 @Repository
 public interface ProyectosRepository extends JpaRepository<Proyectos, Integer> {
-
+    // get de todos los proyectos sin fecha de baja
     @Query("Select p from pr_proyectos p where p.fechaBaja is null")
     List<Proyectos> getAll ();
-
+    // get de un proyecto por su id
     @Query("select p from pr_proyectos p where p.id = :idProyecto")
     Proyectos getProjectById(@Param("idProyecto") int idProyecto);
 }

@@ -5,3 +5,4 @@ public class EmployeeHasProjectsException extends RuntimeException{
         super(object);
     }
 }
+ // excepcion que avisa de que un empleado tiene proyectos

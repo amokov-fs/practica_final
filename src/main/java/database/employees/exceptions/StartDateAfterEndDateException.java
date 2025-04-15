@@ -5,3 +5,5 @@ public class StartDateAfterEndDateException extends RuntimeException{
         super(object);
     }
 }
+
+//expecion de fecha posterior a otra que no debe ser posterior

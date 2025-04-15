@@ -11,19 +11,19 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class EmployeesExceptionHandler { // Devuelven un json con clave "error" y el mensaje correspondiente como valor
-    @ExceptionHandler(EmployeeHasProjectsException.class)
+    @ExceptionHandler(EmployeeHasProjectsException.class) //manejo de excepción de que empleado tiene proyectos
     public ResponseEntity<Map<String, String>> handleEmployeeHasProjects(EmployeeHasProjectsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", ex.getMessage()));
     }
 
-    @ExceptionHandler(ProjectHasEmployeesException.class)
+    @ExceptionHandler(ProjectHasEmployeesException.class)// manejo de la excepción de que un proyecto tiene empleados
     public ResponseEntity<Map<String, String>> handleProjectHasEmployeesException(ProjectHasEmployeesException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", ex.getMessage()));
     }
 
-    @ExceptionHandler(StartDateAfterEndDateException.class)
+    @ExceptionHandler(StartDateAfterEndDateException.class) // manejo de excepcion de fecha de inicio/nacimiento posterior a fecha de fin/alta
     public ResponseEntity<Map<String, String>> handleStartDateAfterEndDateException(StartDateAfterEndDateException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", ex.getMessage()));
@@ -36,7 +36,7 @@ public class EmployeesExceptionHandler { // Devuelven un json con clave "error" 
                 .body(Map.of("error", ex.getAllErrors().get(0).getDefaultMessage()));
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class) // Manejo de excepcion de validacion
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage()));

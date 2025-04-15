@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="projectsStore.dialog" max-width="700px">
     <v-card>
-      <v-card-text>
+      <v-card-text> <!-- muestra el formulario si dialog de la store de proyectos es true --> 
           <v-row dense>
             <v-col
               cols="12"
@@ -12,7 +12,7 @@
                 v-model = "descripcion"
                 label="Descripcion Proyecto*"
                 required
-              ></v-text-field>
+              ></v-text-field><!-- Input Descripcion --> 
             </v-col>
           
             <v-col
@@ -23,7 +23,7 @@
               <v-text-field
                 v-model = "fInicio"
                 label="Fecha de inicio* (yyyy-mm-dd)"
-              ></v-text-field>
+              ></v-text-field> <!-- Input fecha inicio --> 
             </v-col>
             </v-row>
             <v-row dense>
@@ -36,7 +36,7 @@
                 v-model = "fFinal"
                 label="Fecha de finalizacion (yyyy-mm-dd)"
                 persistent-hint
-              ></v-text-field>
+              ></v-text-field> <!-- Input fecha final --> 
             </v-col>
             
             <v-col
@@ -47,7 +47,7 @@
               <v-text-field
                 v-model = "lugar"
                 label="Lugar"
-              ></v-text-field>
+              ></v-text-field> <!-- Input lugar --> 
             </v-col>
             </v-row>
             <v-row dense>
@@ -59,7 +59,7 @@
               <v-text-field
                 v-model = "observaciones"
                 label="Observaciones"
-              ></v-text-field>
+              ></v-text-field> <!-- Input observaciones --> 
             </v-col>
           </v-row>
 
@@ -67,9 +67,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-
+          <!-- boton cancelar sin guardar el formulario --> 
           <v-btn text="Cancelar" variant="plain" @click.stop="projectsStore.hideDialog()"></v-btn>
-
+          <!-- boton de guardar el proyecto --> 
           <v-btn
             color="primary"
             text="Guardar"
@@ -89,14 +89,20 @@
 
 
 <script setup>
+
+//importar store de proyecto
 import {ref} from 'vue'
 import {useProjectsStore} from '../stores/projects'
+
+// variables que se actualizan con los inputs
 
 const descripcion = ref("")
 const fInicio = ref("")
 const fFinal = ref("")
 const lugar = ref("")
 const observaciones = ref("")
+
+// diccionario del proyecto nuevo
 
 const nuevoProyecto = {
   'descripcion':descripcion.value,

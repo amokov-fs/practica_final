@@ -5,3 +5,5 @@ public class ProjectHasEmployeesException extends RuntimeException{
         super(object);
     }
 }
+
+//excepcion de proyecto tiene empleados

@@ -2,10 +2,11 @@
   <div>
     <div class="header">
         <h1>Proyectos</h1>
+        <!-- Boton para mostrar el formulario de alta --> 
         <v-btn @click = "projectsStore.showDialog()" color="#028CF5" style="position:absolute;top:10px;right:10px;">Alta proyecto</v-btn>
-        <ProjectsForm v-model="projectsStore.dialog" />
+        <ProjectsForm v-model="projectsStore.dialog" /> <!-- muestra el formulario de alta si dialog de la store de proyectos es true --> 
     </div>
-    <v-table style="border-style: ridge; width:100%;">
+    <v-table style="border-style: ridge; width:100%;"> <!-- encabezados tabla --> 
         <thead>
         <tr style="background-color:#026fc1;">
             <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:6%;">ID</th>
@@ -17,7 +18,7 @@
             <th class = "text-white" style="border-style: ridge; border-color:black;border-width:thin; width:3%;"></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody>  <!-- Para cada proyecto se muestra su informacion --> 
         <tr
             v-for="proyecto in projectsStore.projects"
             :key="proyecto.index"
@@ -42,7 +43,7 @@
         </tr>
         </tbody>
     </v-table>
-
+    <!-- muestra el formulario de alta si editDialog de la store de proyectos es true --> 
     <EditProject v-model="projectsStore.editDialog" />
     
     <div >
@@ -53,6 +54,8 @@
 </template>
 
 <script setup>
+//importar store de proyectos y formularios de edicion y de alta
+
 import ProjectsForm from "../components/ProjectsForm.vue"
 import EditProject from "../components/EditProject.vue"
 import {useProjectsStore} from '../stores/projects'

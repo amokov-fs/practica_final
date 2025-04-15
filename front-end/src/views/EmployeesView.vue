@@ -2,11 +2,12 @@
   <div>
     <div class="header">
         <h1>Empleados</h1>
+        <!-- Boton para mostrar el formulario de alta --> 
         <v-btn @click = "employeesStore.showDialog()" color="#028CF5" style="position:absolute;top:10px;right:10px;">Alta empleado</v-btn>
-        <EmployeesForm v-model="employeesStore.dialog" />
+        <EmployeesForm v-model="employeesStore.dialog" /> <!-- muestra el formulario de alta si dialog de la store de empleados es true --> 
     </div>
     
-    <v-table style="border-style: ridge;">
+    <v-table style="border-style: ridge;"> <!-- encabezados tabla --> 
         <thead>
         <tr style="background-color:#026fc1;color:white;">
             <th style="border-style: ridge; border-color:black;border-width:thin; width:6%;">ID</th>
@@ -23,7 +24,7 @@
             <th style="border-style: ridge; border-color:black;border-width:thin;width:3%;"></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody> <!-- Para cada empleado se muestra su informacion --> 
         <tr
             v-for="empleado in employeesStore.employees"
             :key="empleado.id"
@@ -56,7 +57,7 @@
         </tbody>
     </v-table>
 
-    <EditEmployee v-model="employeesStore.editDialog" />
+    <EditEmployee v-model="employeesStore.editDialog" />  <!-- muestra el formulario de alta si editDialog de la store de empleados es true --> 
     
     <div >
         
@@ -66,7 +67,7 @@
 </template>
 
 <script setup>
-
+//importar store de empleados y formularios de edicion y de alta
 import {onMounted} from "vue"
 import {useEmployeesStore} from '../stores/employees'
 import EmployeesForm from '../components/EmployeesForm.vue'
@@ -74,6 +75,7 @@ import EditEmployee from '../components/EditEmployee.vue'
 
 const employeesStore = useEmployeesStore();
 
+// al montar la store de empleados, llenar la lista de empleados que no estén dados de baja
 onMounted(() => {
   if (employeesStore.employees.length === 0) {
     employeesStore.getActiveEmployees()

@@ -10,10 +10,10 @@ import java.util.List;
 
 @Repository
 public interface EmpleadosRepository extends JpaRepository<Empleados, Integer> {
-
+    // get de todos los empledos activos
     @Query("Select e from em_empleados e where e.fechaBaja is null")
     List<Empleados> getAll();
-
+    // get de un empleado por su id
     @Query("select e from em_empleados e where e.id = :idEmpleado")
     Empleados getEmployeeById(@Param("idEmpleado") int idEmpleado);
 }

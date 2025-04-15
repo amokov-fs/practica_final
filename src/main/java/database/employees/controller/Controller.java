@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 public class Controller {
-
+    // expresiones regulares
     final String regexNif = "[0-9]{8}[A-z]";
     final String regexNombre = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[ ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*";
     final String regexApellido = "[A-ZÀ-ÿ][A-zÀ-ÿ]+[- ]?[A-ZÀ-ÿ]*[A-zÀ-ÿ]*";
@@ -27,6 +27,7 @@ public class Controller {
     final String regexEmail = "[a-z0-9.-]+[@][a-z]+[.][a-z]+";
     final String regexEdoCivil = "[S|C]";
     final String regexFormacionU = "[S|N]";
+    // mensajes a mostrar en caso de excepción de validacion
     final String msgNif = "El NIF debe tener 8 números y una letra";
     final String msgNombre = "El nombre solo puede tener letras";
     final String msgApellido1 = "El apellido 1 solo puede tener letras y/o un guión intercalado";
@@ -45,40 +46,41 @@ public class Controller {
     @Autowired
     EmployeeService employeeService;
     @GetMapping
-    @RequestMapping("getEmployees")
+    @RequestMapping("getEmployees") // get empleados activos
     public ResponseEntity<List<Empleados>> getEmployees(){
         return employeeService.getEmployees();
     }
 
     @GetMapping
-    @RequestMapping("getEmployeeById")
+    @RequestMapping("getEmployeeById") //get empleado por su id
     public ResponseEntity<Empleados> getEmployeeById(
             @RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado) {
         return employeeService.getEmployeeById(idEmpleado);
     }
 
     @GetMapping
-    @RequestMapping("getProjectById")
+    @RequestMapping("getProjectById") // get proyecto por su id
     public ResponseEntity<Proyectos> getProjectById(
             @RequestParam(value = "idProyecto") @NotNull Integer idProyecto) {
         return employeeService.getProjectById(idProyecto);
     }
 
-    @GetMapping
+    @GetMapping // get proyectos sin fecha de baja
     @RequestMapping("getProjects")
     public ResponseEntity<List<Proyectos>> getProjects(){
         return employeeService.getProjects();
     }
 
     @GetMapping
-    @RequestMapping("getProjectEmployees")
+    @RequestMapping("getProjectEmployees") // get empleados de un proyecto
     public ResponseEntity<List<Empleados>> getProjectEmployees(
             @RequestParam(value = "idProyecto") @NotNull Integer idProyecto){
         return employeeService.getProjectEmployees(idProyecto);
     }
 
     @PostMapping
-    @RequestMapping("createEmployee")
+    @RequestMapping("createEmployee") // crear empleado con nif, nombre, apellidos, fehca de nacimiento,
+    // fecha de alta, telefonos de contacto, email, estado civil y formacion universitaria
     public ResponseEntity<String> createEmployee(
             @RequestParam(value = "nifEmpleado") @Pattern(regexp = regexNif, message = msgNif) String nifEmpleado,
             @RequestParam(value = "nombreEmpleado") @Pattern(regexp = regexNombre, message = msgNombre) String nombreEmpleado,
@@ -106,7 +108,7 @@ public class Controller {
     }
 
     @PostMapping
-    @RequestMapping("createProject")
+    @RequestMapping("createProject") // crear proyecto con descripcion, fechas de inicio y de fin, lugar y observaciones
     public ResponseEntity<Proyectos> createProject(
             @RequestParam(value = "desc")
                 @NotBlank(message = msgDescripcion) String desc,
@@ -120,7 +122,7 @@ public class Controller {
     }
 
     @PostMapping
-    @RequestMapping("assignEmployeeToProject")
+    @RequestMapping("assignEmployeeToProject") //asignar empleado a proyecto
     public ResponseEntity<EmpleadoAProyecto> assignEmployeeToProject(
             @RequestParam(value = "idProyecto") @NotNull Integer idProyecto,
             @RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado,
@@ -130,31 +132,31 @@ public class Controller {
     }
 
     @PutMapping
-    @RequestMapping("updateEmployee")
+    @RequestMapping("updateEmployee") //actualizar empleado
     public ResponseEntity<String> updateEmployee(@Valid @RequestBody Empleados empleado) {
         return employeeService.updateEmployee(empleado);
     }
 
     @PutMapping
-    @RequestMapping("updateProject")
+    @RequestMapping("updateProject") //actualizar proyecto
     public ResponseEntity<String> updateProject(@Valid @RequestBody Proyectos proyecto) {
         return employeeService.updateProject(proyecto);
     }
 
     @DeleteMapping
-    @RequestMapping("deleteEmployee")
+    @RequestMapping("deleteEmployee") // borrar empleado
     public ResponseEntity<String> deleteEmployee(@RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado){
         return employeeService.deleteEmployee(idEmpleado);
     }
 
     @DeleteMapping
-    @RequestMapping("deleteProject")
+    @RequestMapping("deleteProject") // borrar proyecto
     public ResponseEntity<String> deleteProject(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto){
         return employeeService.deleteProject(idProyecto);
     }
 
     @DeleteMapping
-    @RequestMapping("deleteEmployeeFromProject")
+    @RequestMapping("deleteEmployeeFromProject") // desasignar empleado de proyecto
     public ResponseEntity<String> deleteEmployeeFromProject(@RequestParam(value = "idProyecto") @NotNull Integer idProyecto,
                                                             @RequestParam(value = "idEmpleado") @NotNull Integer idEmpleado){
         return employeeService.deleteEmployeeFromProject(idProyecto,idEmpleado);
